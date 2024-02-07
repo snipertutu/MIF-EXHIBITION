@@ -12,8 +12,8 @@
   <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
 
   <!-- plugin css -->
-  {!! Html::style('assets/plugins/@mdi/font/css/materialdesignicons.min.css') !!}
-  {!! Html::style('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') !!}
+  <link rel="stylesheet" href="{{ asset('assets/plugins/@mdi/font/css/materialdesignicons.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}">
   <!-- end plugin css -->
 
   <!-- plugin css -->
@@ -21,7 +21,7 @@
   <!-- end plugin css -->
 
   <!-- common css -->
-  {!! Html::style('css/app.css') !!}
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <!-- end common css -->
 
   @stack('style')
@@ -35,7 +35,7 @@
   </div>
 
     <!-- base js -->
-    {!! Html::script('js/app.js') !!}
+    <script src="{{ asset('js/app.js')}}"></script>
     <!-- end base js -->
 
     <!-- plugin js -->

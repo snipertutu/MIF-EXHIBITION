@@ -15,7 +15,7 @@
           <img class="img-xs rounded-circle" src="{{ url('assets/images/faces/face8.jpg') }}" alt="Profile image">
           <span class="profile-text d-none d-md-inline-flex">Si Tampan</span> </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-          <a class="dropdown-item mt-2" href="{{ url('/profile') }}"> Profile </a>
+          <a class="dropdown-item mt-2" href="{{ url('/user-pages/profile') }}"> Profile </a>
           <a class="dropdown-item"> Sign Out </a>
         </div>
       </li>
