@@ -1,29 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Auth;
 
-use App\Http\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
-class LoginController extends Controller
+trait AuthenticatesUsers
 {
-    use AuthenticatesUsers;
-
-    // Fungsi redirectTo() sebaiknya diletakkan di dalam trait AuthenticatesUsers, bukan di sini
-
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
     public function showLoginForm()
     {
-        return view('pages.auth.login');
+        return view('/login');
     }
 
     public function login(Request $request)
     {
+        $request->validate([
+            'nim' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
         $credentials = $request->only('nim', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -37,8 +33,8 @@ class LoginController extends Controller
         }
 
         // Jika autentikasi gagal, redirect kembali ke halaman login dengan pesan error
-        return redirect()->back()->withInput($request->only('nim'))->withErrors([
-            'nim' => 'These credentials do not match our records.',
+        throw ValidationException::withMessages([
+            'nim' => [trans('auth.failed')],
         ]);
     }
 
@@ -52,5 +48,4 @@ class LoginController extends Controller
 
         return redirect('/');
     }
-    
 }

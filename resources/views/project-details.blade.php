@@ -56,7 +56,7 @@
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a href="<?php echo url('/') ?>" class="active">Home</a></li>
+                    <li><a href="<?php echo url('/homepage') ?>" class="active">Home</a></li>
                     <li><a href="#footer">Contact</a></li>
                 </ul>
             </nav><!-- .navbar -->
@@ -73,7 +73,7 @@
 
                 <h2>Project Details</h2>
                 <ol>
-                    <li><a href="<?php echo url('/') ?>">Home</a></li>
+                    <li><a href="<?php echo url('/homepage') ?>">Home</a></li>
                     <li>Project Details</li>
                 </ol>
 
