@@ -113,19 +113,19 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="meetingName">Link github</label>
-                            <input type="text" class="form-control" id="meetingName" placeholder="Nama Rapat">
+                            <label for="githubLink">Link github</label>
+                            <input type="text" class="form-control" id="githubLink" placeholder="masukan link github">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="meetingName">Video Aplikasi</label><br>
+                            <label for="aplicationVideo">Video Aplikasi</label><br>
                             <input type="file" name="file">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="meetingName">Gambar Aplikasi</label><br>
+                            <label for="imageAplication">Gambar Aplikasi</label><br>
                             <input type="file" name="file">
                             <input type="file" name="file">
                             <input type="file" name="file">
