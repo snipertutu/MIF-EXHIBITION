@@ -17,17 +17,28 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
+Route::get('/login', 'App\Http\Controllers\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'App\Http\Controllers\LoginController@login');
+
+Route::get('/register', function () {
+    return view('pages.auth.register');
+})->name('register');
+
+Route::post('/register', 'App\Http\Controllers\RegisterController@register')->name('register');
+
 Route::get('/project-details', function () {
     return view('project-details');
 })->name('project-details');
 
 Route::group(['prefix' => 'tables'], function(){
     Route::get('Project', function () { return view('pages.tables.Project'); });
+    Route::get('Project-mhs', function () { return view('pages.tables.Project-mhs'); });
     Route::get('Mahasiswa', function () { return view('pages.tables.Mahasiswa'); });
     Route::get('data-table', function () { return view('pages.tables.data-table'); });
     Route::get('js-grid', function () { return view('pages.tables.js-grid'); });
     Route::get('sortable-table', function () { return view('pages.tables.sortable-table'); });
 });
+
 
 // Route::get('/','DashboardController@index');
 
@@ -74,15 +85,10 @@ Route::group(['prefix' => 'icons'], function(){
 });
 
 Route::group(['prefix' => 'user-pages'], function(){
-    Route::get('login', function () { return view('pages.user-pages.login'); });
-    Route::get('login-2', function () { return view('pages.user-pages.login-2'); });
-    Route::get('multi-step-login', function () { return view('pages.user-pages.multi-step-login'); });
-    Route::get('register', function () { return view('pages.user-pages.register'); });
-    Route::get('register-2', function () { return view('pages.user-pages.register-2'); });
-    Route::get('lock-screen', function () { return view('pages.user-pages.lock-screen'); });
     Route::get('profile', function () { return view('pages.user-pages.profile'); });
-
+    Route::get('profile-mhs', function () { return view('pages.user-pages.profile-mhs'); });
 });
+
 
 Route::group(['prefix' => 'error-pages'], function(){
     Route::get('error-404', function () { return view('pages.error-pages.error-404'); });

@@ -63,8 +63,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><span class="title-meeting-modal"></span> Tambah Project
-                 <span class="meeting-name"></span></h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><span class="title-meeting-modal"></span> Agenda
+                    Rapat <span class="meeting-name"></span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -73,41 +73,41 @@
                 <form>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="aplicationName">Nama Aplikasi</label>
-                            <input type="text" class="form-control" id="meetingName" placeholder="Nama Aplikasi">
+                            <label for="meetingTipe">Nama Aplikasi</label>
+                            <input type="text" class="form-control" id="meetingName" placeholder="Nama Rapat">
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="semester">Semester</label>
-                            <input type="text" class="form-control" id="meetingName" placeholder="Semester 1">
+                            <label for="meetingName">Semester</label>
+                            <input type="text" class="form-control" id="meetingName" placeholder="Nama Rapat">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="leaderName">Ketua Kelompok</label>
-                            <input type="text" class="form-control" id="meetingName" placeholder="Nama Ketua">
+                            <label for="meetingName">Ketua Kelompok</label>
+                            <input type="text" class="form-control" id="meetingName" placeholder="Nama Rapat">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label for="memberName">Anggota Kelompok</label>
-                                    <select id="member1" class="form-control">
-                                        <option value="1" selected>si a</option>
-                                        <option value="2">si b</option>
+                            <label for="meetingName">Anggota Kelompok</label>
+                                    <select id="meetingTipe" class="form-control">
+                                        <option value="1" selected>Rapat Resmi</option>
+                                        <option value="2">Rapat Program Kerja</option>
                                     </select>
-                                    <select id="member2" class="form-control">
-                                        <option value="1" selected>si a</option>
-                                        <option value="2">si b</option>
+                                    <select id="meetingTipe" class="form-control">
+                                        <option value="1" selected>Rapat Resmi</option>
+                                        <option value="2">Rapat Program Kerja</option>
                                     </select>
-                                    <select id="member3" class="form-control">
-                                        <option value="1" selected>si a</option>
-                                        <option value="2">si b</option>
+                                    <select id="meetingTipe" class="form-control">
+                                        <option value="1" selected>Rapat Resmi</option>
+                                        <option value="2">Rapat Program Kerja</option>
                                     </select>
-                                    <select id="member4" class="form-control">
-                                        <option value="1" selected>si a</option>
-                                        <option value="2">si b</option>
+                                    <select id="meetingTipe" class="form-control">
+                                        <option value="1" selected>Rapat Resmi</option>
+                                        <option value="2">Rapat Program Kerja</option>
                                     </select>
                         </div>
                     </div>
