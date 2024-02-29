@@ -15,8 +15,10 @@
           <img class="img-xs rounded-circle" src="{{ url('assets/images/faces/face8.jpg') }}" alt="Profile image">
           <span class="profile-text d-none d-md-inline-flex">Si Tampan</span> </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-          <a class="dropdown-item mt-2" href="{{ url('/user-pages/profile') }}"> Profile </a>
-          <a class="dropdown-item"> Sign Out </a>
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
         </div>
       </li>
     </ul>

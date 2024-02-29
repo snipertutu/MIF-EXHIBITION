@@ -4,13 +4,14 @@ namespace App\Http\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\LoginController;
 use Illuminate\Validation\ValidationException;
 
 trait AuthenticatesUsers
 {
     public function showLoginForm()
     {
-        return view('/login');
+        return view('pages.auth.login');
     }
 
     public function login(Request $request)
@@ -38,7 +39,7 @@ trait AuthenticatesUsers
         ]);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         Auth::logout();
 
@@ -46,6 +47,6 @@ trait AuthenticatesUsers
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return view('login');
     }
 }

@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\MahasiswaDashboardController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,21 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
-    return view('dashboard');
-});
-Route::get('/homepage', function () {
     return view('index');
-})->name('homepage');
+})->name('landingpage');
 
-Route::get('/login', 'App\Http\Controllers\LoginController@showLoginForm')->name('login');
-Route::post('/login', 'App\Http\Controllers\LoginController@login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/register', function () {
-    return view('pages.auth.register');
-})->name('register');
-
-Route::post('/register', 'App\Http\Controllers\RegisterController@register')->name('register');
+Route::middleware(['auth.user'])->group(function () {
+    Route::get('/adm', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/mhs', [MahasiswaDashboardController::class, 'index'])->name('mahasiswa.dashboard');
+});
 
 Route::get('/project-details', function () {
     return view('project-details');
@@ -105,6 +110,6 @@ Route::get('/clear-cache', function() {
 });
 
 // 404 for undefined routes
-Route::any('/{page?}',function(){
-    return View::make('pages.error-pages.error-404');
-})->where('page','.*');
+// Route::any('/{page?}',function(){
+//     return View::make('pages.error-pages.error-404');
+// })->where('page','.*');
