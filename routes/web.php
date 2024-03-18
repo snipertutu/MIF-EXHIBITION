@@ -4,6 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\MahasiswaDashboardController;
+use App\Http\Controllers\ProjectMahasiswaController;
+use App\Http\Controllers\ProjectAdminController;
+use App\Http\Controllers\ProjectDetailController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\AdminCarouselController;
+use App\Http\Controllers\CarouselController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,77 +29,68 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Route::get('/', function () {
-    return view('index');
-})->name('landingpage');
+Route::get('/landingpage', [IndexController::class, 'index'])->name('index');
+Route::get('/landingpage', [IndexController::class, 'home'])->name('home');
+
+Route::get('/project-details/{id}', [ProjectDetailController::class, 'show'])->name('project.details');
+
+
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('forgot-password.email');
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::get('/profile', [ProfileController::class, 'show'])->name('pages.user-pages.profile-mhs')->middleware('auth');
+
+
 Route::middleware(['auth.user'])->group(function () {
     Route::get('/adm', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/mhs', [MahasiswaDashboardController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('/mhs', [MahasiswaDashboardController::class, 'index'])->name('dashboard-mhs');
 });
+Route::get('/adm', [AdminDashboardController::class, 'home'])->name('dashboard');
+
+
+Route::middleware('auth')->group(function () {
+    Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+});
+
+Route::get('tables/project-mhs', [ProjectMahasiswaController::class, 'index'])->name('project-mhs');
+Route::post('/projects', [ProjectMahasiswaController::class, 'store'])->name('projects.store');
+Route::post('/upload-gambar', [ProjectMahasiswaController::class, 'uploadGambar'])->name('upload.gambar');
+Route::post('/upload/video', [ProjectMahasiswaController::class, 'uploadVideo'])->name('upload.video');
+Route::get('/projects/{id}/edit', [ProjectMahasiswaController::class, 'edit'])->name('projects.edit');
+Route::put('/projects/{id}', [ProjectMahasiswaController::class, 'update'])->name('projects.update');
+
+Route::get('tables/project', [ProjectAdminController::class, 'index'])->name('project.index');
+Route::get('tables/project/{id}', [ProjectAdminController::class, 'hidden'])->name('project.hidden');
+
+Route::get('tables/mahasiswa', [UserController::class, 'index'])->name('pages.table.mahasiswa');
+
+Route::get('/homepage', [AdminCarouselController::class, 'index'])->name('homepage.index');
+Route::post('/homepage', [AdminCarouselController::class, 'store'])->name('homepage.store');
+Route::delete('/homepage/{id}', [AdminCarouselController::class, 'destroy'])->name('homepage.destroy');
+
+
+
 
 Route::get('/project-details', function () {
     return view('project-details');
 })->name('project-details');
 
 Route::group(['prefix' => 'tables'], function(){
-    Route::get('Project', function () { return view('pages.tables.Project'); });
     Route::get('Project-mhs', function () { return view('pages.tables.Project-mhs'); });
-    Route::get('Mahasiswa', function () { return view('pages.tables.Mahasiswa'); });
     Route::get('data-table', function () { return view('pages.tables.data-table'); });
     Route::get('js-grid', function () { return view('pages.tables.js-grid'); });
     Route::get('sortable-table', function () { return view('pages.tables.sortable-table'); });
-});
-
-
-// Route::get('/','DashboardController@index');
-
-Route::group(['prefix' => 'basic-ui'], function(){
-    Route::get('accordions', function () { return view('pages.basic-ui.accordions'); });
-    Route::get('buttons', function () { return view('pages.basic-ui.buttons'); });
-    Route::get('badges', function () { return view('pages.basic-ui.badges'); });
-    Route::get('breadcrumbs', function () { return view('pages.basic-ui.breadcrumbs'); });
-    Route::get('dropdowns', function () { return view('pages.basic-ui.dropdowns'); });
-    Route::get('modals', function () { return view('pages.basic-ui.modals'); });
-    Route::get('progress-bar', function () { return view('pages.basic-ui.progress-bar'); });
-    Route::get('pagination', function () { return view('pages.basic-ui.pagination'); });
-    Route::get('tabs', function () { return view('pages.basic-ui.tabs'); });
-    Route::get('typography', function () { return view('pages.basic-ui.typography'); });
-    Route::get('tooltips', function () { return view('pages.basic-ui.tooltips'); });
-});
-
-Route::group(['prefix' => 'forms'], function(){
-    Route::get('basic-elements', function () { return view('pages.forms.basic-elements'); });
-    Route::get('advanced-elements', function () { return view('pages.forms.advanced-elements'); });
-    Route::get('dropify', function () { return view('pages.forms.dropify'); });
-    Route::get('form-validation', function () { return view('pages.forms.form-validation'); });
-    Route::get('step-wizard', function () { return view('pages.forms.step-wizard'); });
-    Route::get('wizard', function () { return view('pages.forms.wizard'); });
-});
-
-Route::group(['prefix' => 'tables'], function(){
-    Route::get('basic-table', function () { return view('pages.tables.basic-table'); });
-    Route::get('data-table', function () { return view('pages.tables.data-table'); });
-    Route::get('js-grid', function () { return view('pages.tables.js-grid'); });
-    Route::get('sortable-table', function () { return view('pages.tables.sortable-table'); });
-});
-
-Route::get('notifications', function () {
-    return view('pages.notifications.index');
-});
-
-Route::group(['prefix' => 'icons'], function(){
-    Route::get('material', function () { return view('pages.icons.material'); });
-    Route::get('flag-icons', function () { return view('pages.icons.flag-icons'); });
-    Route::get('font-awesome', function () { return view('pages.icons.font-awesome'); });
-    Route::get('simple-line-icons', function () { return view('pages.icons.simple-line-icons'); });
-    Route::get('themify', function () { return view('pages.icons.themify'); });
 });
 
 Route::group(['prefix' => 'user-pages'], function(){
@@ -110,6 +111,6 @@ Route::get('/clear-cache', function() {
 });
 
 // 404 for undefined routes
-// Route::any('/{page?}',function(){
-//     return View::make('pages.error-pages.error-404');
-// })->where('page','.*');
+Route::any('/{page?}',function(){
+    return View::make('pages.error-pages.error-404');
+})->where('page','.*');

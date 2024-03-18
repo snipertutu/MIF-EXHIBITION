@@ -12,8 +12,8 @@
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown d-none d-xl-inline-block">
         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-          <img class="img-xs rounded-circle" src="{{ url('assets/images/faces/face8.jpg') }}" alt="Profile image">
-          <span class="profile-text d-none d-md-inline-flex">Si Tampan</span> </a>
+          <img class="img-xs rounded-circle" src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="Profile image">
+          <span class="profile-text d-none d-md-inline-flex">{{ auth()->user()->name }}</span> </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
           <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

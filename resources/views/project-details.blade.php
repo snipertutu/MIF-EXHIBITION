@@ -10,8 +10,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{{ asset('assets/img/favicon.png')}}" rel="icon">
+    <link href="{{ asset('assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,15 +21,15 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }} " rel="stylesheet">
+    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 
     <!-- =======================================================
   * Template Name: UpConstruction
@@ -56,7 +56,7 @@
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a href="<?php echo url('/homepage') ?>" class="active">Home</a></li>
+                    <li><a href="<?php echo url('/landingpage') ?>" class="active">Home</a></li>
                     <li><a href="#footer">Contact</a></li>
                 </ul>
             </nav><!-- .navbar -->
@@ -73,7 +73,7 @@
 
                 <h2>Project Details</h2>
                 <ol>
-                    <li><a href="<?php echo url('/homepage') ?>">Home</a></li>
+                    <li><a href="<?php echo url('/landingpage') ?>">Home</a></li>
                     <li>Project Details</li>
                 </ol>
 
@@ -84,8 +84,8 @@
         <section id="project-details" class="project-details">
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-                <div class="position-relative h-100">
-                    <<img src="assets/img/projects/remodeling-1.jpg" alt="">
+                <div class="position-relative d-flex justify-content-center align-items-center h-100">
+                    <img src="{{ asset('storage/' . $project->video_aplikasi) }}" alt="" style="max-width: 100%;">
                 </div>
 
                 <div class="row justify-content-between gy-4 mt-4">
@@ -94,51 +94,43 @@
 
                         <div class="col-md-6 portfolio-item filter-remodeling">
                             <div class="portfolio-content h-100">
-                                <img src="assets/img/projects/remodeling-1.jpg" class="img-fluid" alt="">
+                                <img src="{{ asset('storage/' . $project->gambar_1) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="assets/img/projects/remodeling-1.jpg" title="Remodeling 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_1) }}" title="Remodeling 1"
                                         data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
-                                    <a href="{{ route('project-details') }}" title="More Details"
-                                        class="details-link"><i class="bi bi-link-45deg"></i></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 portfolio-item filter-construction">
                             <div class="portfolio-content h-100">
-                                <img src="assets/img/projects/construction-1.jpg" class="img-fluid" alt="">
+                                <img src="{{ asset('storage/' . $project->gambar_2) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="assets/img/projects/construction-1.jpg" title="Construction 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_2) }}" title="Construction 1"
                                         data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
-                                    <a href="{{ route('project-details') }}" title="More Details"
-                                        class="details-link"><i class="bi bi-link-45deg"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 portfolio-item filter-remodeling">
                             <div class="portfolio-content h-100">
-                                <img src="assets/img/projects/remodeling-1.jpg" class="img-fluid" alt="">
+                                <img src="{{ asset('storage/' . $project->gambar_3) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="assets/img/projects/remodeling-1.jpg" title="Remodeling 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_3) }}" title="Remodeling 1"
                                         data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
-                                    <a href="{{ route('project-details') }}" title="More Details"
-                                        class="details-link"><i class="bi bi-link-45deg"></i></a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 portfolio-item filter-construction">
                             <div class="portfolio-content h-100">
-                                <img src="assets/img/projects/construction-1.jpg" class="img-fluid" alt="">
+                                <img src="{{ asset('storage/' . $project->gambar_4) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="assets/img/projects/construction-1.jpg" title="Construction 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_4) }}" title="Construction 1"
                                         data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
-                                    <a href="{{ route('project-details') }}" title="More Details"
-                                        class="details-link"><i class="bi bi-link-45deg"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -149,14 +141,12 @@
                         <div class="portfolio-info">
                             <h3>Informasi Projek</h3>
                             <ul>
-                                <li><strong>Nama Kelompok</strong> <span>MIF EXHIBITION</span></li>
-                                <li><strong>Nama Ketua </strong> <span>Alinda Nafizah</span></li>
-                                <li><strong>Anggota Kelompok</strong> <span> Siti Anisyah <br> Nafis <br> bintang
-                                    </span></li>
-                                <li><strong>Angkatan</strong> <span>2022</span></li>
-                                <li><strong>Semester</strong> <span>3</span></li>
-                                <li><strong>Golongan</strong> <span>A</span></li>
-                                <li><strong>Github Projek</strong> <a href="#">www.contoh aja.com</a></li>
+                                <li><strong>Nama Aplikasi</strong> <span>{{ $project->nama_aplikasi }}</span></li>
+                                <li><strong>Nama Ketua </strong> <span>{{ $project->ketua_kelompok }}</span></li>
+                                <li><strong>Angkatan</strong> <span>{{ $project->angkatan }}</span></li>
+                                <li><strong>Semester</strong> <span>{{ $project->semester}}</span></li>
+                                <li><strong>Golongan</strong> <span>{{ $project->golongan}}</span></li>
+                                <li><strong>Github Projek</strong> <a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
                                 <!-- <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li> -->
                             </ul>
                         </div>
@@ -229,16 +219,16 @@
     <!-- <div id="preloader"></div> -->
 
     <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/aos/aos.js')}}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{ asset('assets/vendor/php-email-form/validate.js')}}"></script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js_home/main.js"></script>
+    <script src="{{ asset('assets/js_home/main.js')}}"></script>
 
 </body>
 

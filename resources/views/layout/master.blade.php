@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="{{ asset('assets/plugins/@mdi/font/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}">
   <!-- end plugin css -->
-
   @stack('plugin-styles')
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
 
   <!-- common css -->
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -44,6 +44,8 @@
   <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
   <!-- end base js -->
 
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
   <!-- plugin js -->
   @stack('plugin-scripts')
   <!-- end plugin js -->
@@ -55,7 +57,6 @@
   <script src="{{ asset('assets/js/settings.js')}}"></script>
   <script src="{{ asset('assets/js/todolist.js')}}"></script>
   <!-- end common js -->
-
   @stack('custom-scripts')
 </body>
 </html>

@@ -37,7 +37,7 @@
               <label class="form-check-label">
                 <input type="checkbox" class="form-check-input" checked> Keep me signed in </label>
             </div>
-            <a href="#" class="text-small forgot-password text-black">Forgot Password</a>
+            <a href="{{ route('forgot-password')}}" class="text-small forgot-password text-black">Forgot Password</a>
           </div>
           <div class="text-block text-center my-3">
             <span class="text-small font-weight-semibold">Not a member ?</span>
