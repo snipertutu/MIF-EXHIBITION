@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProjectMahasiswa;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,8 +25,10 @@ class ProjectMahasiswaController extends Controller
             'angkatan' => 'required',
             'golongan' => 'required',
             'ketua_kelompok' => 'required',
+            'kategori' => 'required',
+            'git' => 'required',
             'link_github' => 'required',
-            'video_aplikasi' => 'required|mimes:mp4,jpeg,png,jpg|max:102400', // maksimal 100MB
+            'link_youtube' => 'required',
             'gambar_1' => 'image|mimes:jpeg,png,jpg|max:2048',
             'gambar_2' => 'image|mimes:jpeg,png,jpg|max:2048',
             'gambar_3' => 'image|mimes:jpeg,png,jpg|max:2048',
@@ -41,10 +44,7 @@ class ProjectMahasiswaController extends Controller
         $project->golongan = $request->golongan;
         $project->ketua_kelompok = $request->ketua_kelompok;
         $project->link_github = $request->link_github;
-
-        // Upload video aplikasi
-        $videoPath = $request->file('video_aplikasi')->store('videos/project_video', 'public');
-        $project->video_aplikasi = $videoPath;
+        $project->link_youtube = $request->link_youtube;
 
         // Upload gambar-gambar
         $gambarPaths = [];
@@ -62,8 +62,25 @@ class ProjectMahasiswaController extends Controller
 
         $project->save();
 
+        // Tambahkan anggota jika kategori bukan Tugas Akhir
+        if ($request->kategori != 'Tugas Akhir') {
+            if ($request->has('anggota')) {
+                foreach ($request->anggota as $nim) {
+                    // Cari user berdasarkan NIM
+                    $user = User::where('nim', $nim)->first();
+                    // Jika user ditemukan, tambahkan sebagai anggota project
+                    if ($user) {
+                        $project->users()->attach($user->id);
+                    }
+                }
+            } else {
+                return back()->withErrors(['anggota' => 'Pilih minimal satu anggota.']);
+            }
+        }
+
         return redirect()->route('project-mhs')->with('success', 'Data project berhasil ditambahkan.');
     }
+
 
     public function edit($id)
     {

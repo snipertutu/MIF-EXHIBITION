@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -65,6 +66,12 @@ Route::middleware('auth')->group(function () {
 
 Route::get('tables/project-mhs', [ProjectMahasiswaController::class, 'index'])->name('project-mhs');
 Route::post('/projects', [ProjectMahasiswaController::class, 'store'])->name('projects.store');
+Route::get('/search-member-by-nim', [ProjectMahasiswaController::class, 'searchMemberByNIM'])->name('search.member.byNIM');
+Route::get('/search/nim', function (Request $request) {
+    $query = $request->query('query');
+    $nims = User::where('nim', 'like', '%' . $query . '%')->pluck('nim');
+    return response()->json($nims);
+})->name('search.nim');
 Route::post('/upload-gambar', [ProjectMahasiswaController::class, 'uploadGambar'])->name('upload.gambar');
 Route::post('/upload/video', [ProjectMahasiswaController::class, 'uploadVideo'])->name('upload.video');
 Route::get('/projects/{id}/edit', [ProjectMahasiswaController::class, 'edit'])->name('projects.edit');

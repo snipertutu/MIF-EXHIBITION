@@ -24,9 +24,6 @@
                               <th>Angkatan</th>
                               <th>Golongan</th>
                               <th>Ketua Kelompok</th>
-                              <th>Link Github</th>
-                              <th>Video Aplikasi</th>
-                              <th>Gambar</th>
                               <th>AKSI</th>
                           </tr>
                       </thead>
@@ -38,16 +35,6 @@
                               <td>{{ $project->angkatan }}</td>
                               <td>{{ $project->golongan }}</td>
                               <td>{{ $project->ketua_kelompok }}</td>
-                              <td>{{ $project->link_github }}</td>
-                              <td>
-                                  <a href="{{ asset('storage/' . $project->video_aplikasi) }}" target="_blank">Tonton Video</a>
-                              </td>
-                              <td>
-                                  <img src="{{ asset('storage/' . $project->gambar_1) }}" alt="{{ $project->nama_aplikasi }}" width="100">
-                                  <img src="{{ asset('storage/' . $project->gambar_2) }}" alt="{{ $project->nama_aplikasi }}" width="100">
-                                  <img src="{{ asset('storage/' . $project->gambar_3) }}" alt="{{ $project->nama_aplikasi }}" width="100">
-                                  <img src="{{ asset('storage/' . $project->gambar_4) }}" alt="{{ $project->nama_aplikasi }}" width="100">
-                              </td>
                               <td>
                                 <button type="button" class="btn btn-primary btn-sm edit-project-btn" data-toggle="modal" data-target="#editProjectModal{{ $project->id }}" data-project-id="{{ $project->id }}">
                                     Edit
@@ -66,7 +53,7 @@
 
 <!-- Tambah Proyek Modal -->
 <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-labelledby="addProjectModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 90%">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addProjectModalLabel">Tambah Project</h5>
@@ -78,8 +65,8 @@
               @csrf
               <div class="modal-body">
                   <div class="row">
-                      <div class="col-md-6">
-                              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                      <div class="col-md-4">
+                          <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                           <div class="form-group">
                               <label for="nama_aplikasi">Nama Aplikasi</label>
                               <input type="text" class="form-control" id="nama_aplikasi" name="nama_aplikasi" placeholder="Nama Aplikasi" required>
@@ -100,16 +87,36 @@
                               <label for="ketua_kelompok">Ketua Kelompok</label>
                               <input type="text" class="form-control" id="ketua_kelompok" name="ketua_kelompok" placeholder="Ketua Kelompok" required>
                           </div>
-                          <div class="form-group">
-                              <label for="link_github">Link Github</label>
-                              <input type="text" class="form-control" id="link_github" name="link_github" placeholder="Link Github" required>
-                          </div>
                       </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="video_aplikasi">Video Aplikasi</label>
-                              <input type="file" class="form-control-file" id="video_aplikasi" name="video_aplikasi" required>
-                          </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="kategori">Kategori Project</label>
+                            <select class="form-control" id="kategori" name="kategori" required>
+                                <option value="">Pilih Kategori</option>
+                                <option value="Tugas Akhir">Tugas Akhir</option>
+                                <option value="Workshop">Workshop</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="anggota">Anggota</label>
+                            <input type="text" class="form-control" id="nim_anggota" placeholder="Cari anggota berdasarkan NIM">
+                            <select class="form-control" id="nim_anggota_list" name="anggota[]" multiple style="display: none;"></select>
+                            <div id="result"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="git">GIT</label>
+                            <input type="text" class="form-control" id="git" name="git" placeholder="Link GIT" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_github">Link Github</label>
+                            <input type="text" class="form-control" id="link_github" name="link_github" placeholder="Link Github" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_youtube">Link Youtube</label>
+                            <input type="text" class="form-control" id="link_youtube" name="link_youtube" placeholder="Link youtube" required>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
                           <div class="form-group">
                               <label for="gambar_1">Gambar 1</label>
                               <input type="file" class="form-control-file" id="gambar_1" name="gambar_1" required>
@@ -138,6 +145,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Edit Proyek Modal -->
 @foreach($projects as $project)
@@ -177,15 +185,27 @@
                                 <input type="text" class="form-control" id="edit_ketua_kelompok{{ $project->id }}" name="ketua_kelompok" value="{{ $project->ketua_kelompok }}">
                             </div>
                             <div class="form-group">
+                                <label for="edit_ketua_kelompok{{ $project->id }}">Kategori Project</label>
+                                <input type="text" class="form-control" id="kategori{{ $project->id }}" name="kategori" value="{{ $project->kategori }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_ketua_kelompok{{ $project->id }}">Anggota</label>
+                                <input type="text" class="form-control" id="anggota{{ $project->id }}" name="anggota" value="{{ $project->anggota }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_ketua_kelompok{{ $project->id }}">GIT</label>
+                                <input type="text" class="form-control" id="git{{ $project->id }}" name="git" value="{{ $project->git }}">
+                            </div>
+                            <div class="form-group">
                                 <label for="edit_link_github{{ $project->id }}">Link Github</label>
                                 <input type="text" class="form-control" id="edit_link_github{{ $project->id }}" name="link_github" value="{{ $project->link_github }}">
                             </div>
+                            <div class="form-group">
+                                <label for="link_youtube{{ $project->id }}">Link youtube</label>
+                                <input type="text" class="form-control" id="edit_link_youtube{{ $project->id }}" name="link_youtube" value="{{ $project->link_youtube }}">
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="edit_video_aplikasi{{ $project->id }}">Video Aplikasi</label>
-                                <input type="file" class="form-control-file" id="edit_video_aplikasi{{ $project->id }}" name="video_aplikasi">
-                            </div>
                             <div class="form-group">
                                 <label for="edit_gambar_1{{ $project->id }}">Gambar 1</label>
                                 <input type="file" class="form-control-file" id="edit_gambar_1{{ $project->id }}" name="gambar_1">
@@ -221,6 +241,54 @@
         $('.edit-project-btn').click(function() {
             var projectId = $(this).data('project-id');
             $('#editProjectModal' + projectId).modal('show');
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var kategoriSelect = document.getElementById('kategori');
+        var anggotaInput = document.getElementById('nim_anggota');
+        var anggotaList = document.getElementById('nim_anggota_list');
+        
+        // Event listener untuk memantau perubahan pada select kategori
+        kategoriSelect.addEventListener('change', function() {
+            var selectedCategory = kategoriSelect.value;
+            if(selectedCategory === 'Tugas Akhir') {
+                anggotaInput.setAttribute('disabled', 'disabled');
+                anggotaList.setAttribute('disabled', 'disabled');
+            } else {
+                anggotaInput.removeAttribute('disabled');
+                anggotaList.removeAttribute('disabled');
+            }
+        });
+        
+        // Event listener untuk memantau input pada form anggota
+        anggotaInput.addEventListener('input', function() {
+            var inputNim = anggotaInput.value;
+            // Lakukan pencarian atau validasi nim disini
+            // Misalnya, hasil pencarian disimpan dalam sebuah array
+            var matchedMembers = [
+                { nim: '123456', name: 'Nama Mahasiswa 1' },
+                { nim: '234567', name: 'Nama Mahasiswa 2' },
+                // Daftar anggota lainnya...
+            ];
+
+            // Tampilkan opsi nim anggota yang sesuai
+            anggotaList.innerHTML = '';
+            matchedMembers.forEach(function(member) {
+                var option = document.createElement('option');
+                option.value = member.nim;
+                option.textContent = member.nim + ' - ' + member.name;
+                anggotaList.appendChild(option);
+            });
+        });
+        
+        // Event listener untuk memilih anggota dari opsi yang muncul
+        anggotaList.addEventListener('change', function() {
+            // Tambahkan nim yang dipilih ke dalam input form anggota
+            var selectedNim = anggotaList.value;
+            anggotaInput.value += (anggotaInput.value ? ', ' : '') + selectedNim;
         });
     });
 </script>

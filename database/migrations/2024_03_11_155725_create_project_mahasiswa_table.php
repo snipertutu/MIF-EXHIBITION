@@ -18,8 +18,11 @@ return new class extends Migration
             $table->unsignedSmallInteger('angkatan');
             $table->string('golongan');
             $table->string('ketua_kelompok');
+            $table->string('kategori')->nullable();
+            $table->string('anggota')->nullable();
+            $table->string('git')->nullable();
             $table->string('link_github')->nullable();
-            $table->string('video_aplikasi')->nullable();
+            $table->string('link_youtube')->nullable();
             $table->string('gambar_1')->nullable();
             $table->string('gambar_2')->nullable();
             $table->string('gambar_3')->nullable();
