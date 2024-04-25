@@ -84,9 +84,12 @@
         <section id="project-details" class="project-details">
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-                <div class="position-relative d-flex justify-content-center align-items-center h-100">
-                    <img src="{{ asset('storage/' . $project->video_aplikasi) }}" alt="" style="max-width: 100%;">
-                </div>
+                <!-- <div class="position-relative d-flex justify-content-center align-items-center h-100">
+                    < src="{{ $project->link_youtube }}" alt="" style="max-width: 100%;">
+                    <iframe width="560" height="315" src="{{ $project->link_youtube }}" frameborder="0" allowfullscreen></iframe>
+                    <a href="{{ $project->link_youtube }}" width="560" height="315 frameborder="0" ></a>
+                </div> -->
+            
 
                 <div class="row justify-content-between gy-4 mt-4">
 
@@ -147,6 +150,7 @@
                                 <li><strong>Semester</strong> <span>{{ $project->semester}}</span></li>
                                 <li><strong>Golongan</strong> <span>{{ $project->golongan}}</span></li>
                                 <li><strong>Github Projek</strong> <a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
+                                <li><strong>video youtube</strong><a href="{{ $project->link_youtube }}">{{ $project->link_youtube }}</a></li>
                                 <!-- <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li> -->
                             </ul>
                         </div>
@@ -165,8 +169,7 @@
         <div class="footer-content position-relative">
             <div class="container">
                 <div class="row">
-
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="footer-info">
                             <h3>MIF EXHIBITION</h3>
                             <p>
@@ -193,6 +196,12 @@
                         <h4>Contact</h4>
                         <strong>Phone:</strong> +1 5589 55488 55<br>
                         <strong>Email:</strong> info@example.com<br>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3">
+                        <div class="footer-info">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1974.712050904118!2d113.72176629338655!3d-8.1599551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d8f623%3A0xf6c4437632474338!2sPoliteknik%20Negeri%20Jember!5e0!3m2!1sid!2sid!4v1714060623494!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
                     </div>
 
                 </div>
