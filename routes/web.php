@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('tables/project-mhs', [ProjectMahasiswaController::class, 'index'])->name('project-mhs');
 Route::post('/projects', [ProjectMahasiswaController::class, 'store'])->name('projects.store');
-Route::get('/search', [ProjectMahasiswaController::class, 'search'])->name('projects.search');
+Route::get('/searchs', [ProjectMahasiswaController::class, 'search'])->name('projects.search');
 Route::get('/get-members/{projectId}', [ProjectMahasiswaController::class, 'getMembers'])->name('projects.getMembers');
 Route::post('/upload-gambar', [ProjectMahasiswaController::class, 'uploadGambar'])->name('upload.gambar');
 Route::post('/upload/video', [ProjectMahasiswaController::class, 'uploadVideo'])->name('upload.video');
@@ -75,6 +75,10 @@ Route::put('/projects/{id}', [ProjectMahasiswaController::class, 'update'])->nam
 
 Route::get('tables/project', [ProjectAdminController::class, 'index'])->name('project.index');
 Route::get('tables/project/{id}', [ProjectAdminController::class, 'hidden'])->name('project.hidden');
+Route::get('/search', [ProjectAdminController::class, 'searchMahasiswa'])->name('project.search');
+Route::get('/get-member/{projectId}', [ProjectAdminController::class, 'getMembersProject'])->name('project.getMembers');
+Route::get('/project/{id}/edit', [ProjectAdminController::class, 'editProject'])->name('project.edit');
+Route::put('/project/{id}', [ProjectAdminController::class, 'updateAnggotaProject'])->name('project.update');
 Route::delete('/projects/{id}', [ProjectAdminController::class, 'delete'])->name('projects.delete');
 
 

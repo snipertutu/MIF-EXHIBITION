@@ -26,106 +26,97 @@ class ProjectMahasiswaController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        'nama_aplikasi' => 'required|string',
-        'semester' => 'required|string',
-        'angkatan' => 'required|string',
-        'golongan' => 'required|string',
-        'ketua_kelompok' => 'nullable|string', // Opsional jika kategori adalah "Tugas Akhir"
-        'kategori' => 'required|string',
-        'link_github' => 'nullable|required_if:semester,3,4,5,6,7,8|string',
-        'git' => 'nullable|required_if:semester,1,2|string',
-        'link_youtube' => 'required|string',
-        'gambar_1' => 'image|mimes:jpeg,png,jpg|max:2048',
-        'gambar_2' => 'image|mimes:jpeg,png,jpg|max:2048',
-        'gambar_3' => 'image|mimes:jpeg,png,jpg|max:2048',
-        'gambar_4' => 'image|mimes:jpeg,png,jpg|max:2048',
-        'anggota' => 'nullable|array', // Menambahkan validasi untuk anggota
-    ]);
+    {
+        // Validasi input
+        $request->validate([
+            'nama_aplikasi' => 'required|string',
+            'semester' => 'required|string',
+            'angkatan' => 'required|string',
+            'golongan' => 'required|string',
+            'kategori' => 'required|string',
+            'link_github' => 'nullable|string',
+            'link_website' => 'nullable|string',
+            'link_youtube' => 'required|string',
+            'narasi' => 'nullable|string',
+            'gambar_1' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'gambar_2' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'gambar_3' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'gambar_4' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'anggota' => 'nullable|array', // Menambahkan validasi untuk anggota
+        ]);
 
-    // Lakukan operasi penyimpanan data jika validasi berhasil
-    $userId = Auth::id();
-    $project = new ProjectMahasiswa();
-    $project->user_id = $userId;
-    $project->nama_aplikasi = $request->nama_aplikasi;
-    $project->semester = $request->semester;
-    $project->kategori = $request->kategori;
-    $project->angkatan = $request->angkatan;
-    $project->golongan = $request->golongan;
-    
-    // Cek kategori, jika "Tugas Akhir", abaikan nilai "ketua_kelompok"
-    if ($request->kategori != 'Tugas Akhir') {
-        $project->ketua_kelompok = $request->ketua_kelompok;
-    }
+        // Lakukan operasi penyimpanan data jika validasi berhasil
+        $userId = Auth::id();
+        $userNim = Auth::user()->nim;
+        $project = new ProjectMahasiswa();
+        $project->user_id = $userId;
+        $project->nama_aplikasi = $request->nama_aplikasi;
+        $project->semester = $request->semester;
+        $project->kategori = $request->kategori;
+        $project->angkatan = $request->angkatan;
+        $project->golongan = $request->golongan;
+        
+        // Cek kategori, jika "Tugas Akhir", abaikan nilai "ketua_kelompok"
+        if ($request->kategori != 'Tugas Akhir') {
+            $project->ketua_kelompok = $userNim;
+        }
 
-    // Atur nilai link_github dan git berdasarkan kategori dan semester
-    if ($request->kategori == 'Tugas Akhir') {
         $project->link_github = $request->link_github;
-    } elseif ($request->kategori == 'Workshop') {
-        if ($request->semester >= 3) {
-            $project->link_github = $request->link_github;
-            // $project->git = null;
-        } else {
-            $project->git = $request->git;
-            // $project->link_github = null;
-        }
-    }    
+        $project->link_website = $request->link_website;
+        $project->link_youtube = $request->link_youtube;
+        $project->narasi = $request->narasi;
 
-    $project->link_youtube = $request->link_youtube;
-
-    // Upload gambar-gambar jika ada
-    $gambarPaths = [];
-    foreach (['gambar_1', 'gambar_2', 'gambar_3', 'gambar_4'] as $field) {
-        if ($request->hasFile($field)) {
-            $gambarPath = $request->file($field)->store('images/project_picture', 'public');
-            $gambarPaths[$field] = $gambarPath;
+        // Upload gambar-gambar jika ada
+        $gambarPaths = [];
+        foreach (['gambar_1', 'gambar_2', 'gambar_3', 'gambar_4'] as $field) {
+            if ($request->hasFile($field)) {
+                $gambarPath = $request->file($field)->store('images/project_picture', 'public');
+                $gambarPaths[$field] = $gambarPath;
+            }
         }
+
+        $project->gambar_1 = $gambarPaths['gambar_1'] ?? null;
+        $project->gambar_2 = $gambarPaths['gambar_2'] ?? null;
+        $project->gambar_3 = $gambarPaths['gambar_3'] ?? null;
+        $project->gambar_4 = $gambarPaths['gambar_4'] ?? null;
+
+        $project->save();
+
+        if ($request->has('anggota')) {
+            foreach ($request->anggota as $anggota) {
+                ProjectDetail::create([
+                    'project_mahasiswa_id' => $project->id,
+                    'anggota' => $anggota
+                ]);
+            }
+        }
+
+        return redirect()->route('project-mhs')->with('success', 'Data project berhasil ditambahkan.');
     }
 
-    $project->gambar_1 = $gambarPaths['gambar_1'] ?? null;
-    $project->gambar_2 = $gambarPaths['gambar_2'] ?? null;
-    $project->gambar_3 = $gambarPaths['gambar_3'] ?? null;
-    $project->gambar_4 = $gambarPaths['gambar_4'] ?? null;
 
-    $project->save();
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('q'); // Mendapatkan kata kunci pencarian dari permintaan
 
-    if ($request->has('anggota')) {
-        foreach ($request->anggota as $anggota) {
-            ProjectDetail::create([
-                'project_mahasiswa_id' => $project->id,
-                'anggota' => $anggota
-            ]);
+        // Lakukan pencarian berdasarkan NIM atau nama untuk pengguna dengan peran mahasiswa
+        $users = User::where(function ($query) use ($searchTerm) {
+                    $query->where('nim', 'like', "%{$searchTerm}%")
+                        ->orWhere('name', 'like', "%{$searchTerm}%");
+                })
+                ->where('role', 'mahasiswa') // Filter berdasarkan peran 'mahasiswa'
+                ->get();
+
+        // Format hasil pencarian menjadi format yang diharapkan oleh Select2
+        $formattedUsers = [];
+        foreach ($users as $user) {
+            $formattedUsers[] = ['id' => $user->id, 'text' => $user->nim . ' - ' . $user->name];
         }
+
+        return response()->json($formattedUsers);
     }
 
-    return redirect()->route('project-mhs')->with('success', 'Data project berhasil ditambahkan.');
-}
-
-
-public function search(Request $request)
-{
-    $searchTerm = $request->input('q'); // Mendapatkan kata kunci pencarian dari permintaan
-
-    // Lakukan pencarian berdasarkan NIM atau nama untuk pengguna dengan peran mahasiswa
-    $users = User::where(function ($query) use ($searchTerm) {
-                $query->where('nim', 'like', "%{$searchTerm}%")
-                    ->orWhere('name', 'like', "%{$searchTerm}%");
-            })
-            ->where('role', 'mahasiswa') // Filter berdasarkan peran 'mahasiswa'
-            ->get();
-
-    // Format hasil pencarian menjadi format yang diharapkan oleh Select2
-    $formattedUsers = [];
-    foreach ($users as $user) {
-        $formattedUsers[] = ['id' => $user->id, 'text' => $user->nim . ' - ' . $user->name];
-    }
-
-    return response()->json($formattedUsers);
-}
-
-public function getMembers($projectId)
+    public function getMembers($projectId)
     {
         // Dapatkan anggota dari proyek tertentu yang memiliki peran mahasiswa
         $members = ProjectDetail::where('project_mahasiswa_id', $projectId)
@@ -165,62 +156,69 @@ public function getMembers($projectId)
     }
 
     public function update(Request $request, $id)
-{
-    $project = ProjectMahasiswa::find($id);
+    {
+        $project = ProjectMahasiswa::find($id);
 
-    // Periksa apakah pengguna yang sedang melakukan permintaan adalah pemilik proyek atau anggota proyek
-    if (!$project || ($project->user_id !== Auth::id() && !ProjectDetail::where('project_mahasiswa_id', $id)->where('anggota', Auth::id())->exists())) {
-        return redirect()->route('project-mhs')->with('error', 'Proyek tidak ditemukan atau Anda tidak memiliki izin untuk mengedit proyek ini.');
-    }
+        // Periksa apakah pengguna yang sedang melakukan permintaan adalah pemilik proyek atau anggota proyek
+        if (!$project || ($project->user_id !== Auth::id() && !ProjectDetail::where('project_mahasiswa_id', $id)->where('anggota', Auth::id())->exists())) {
+            return redirect()->route('project-mhs')->with('error', 'Proyek tidak ditemukan atau Anda tidak memiliki izin untuk mengedit proyek ini.');
+        }
 
-    $request->validate([
-        'nama_aplikasi' => 'required|string',
-        'angkatan' => 'required|string',
-        'golongan' => 'required|string',
-        'link_youtube' => 'required|string',
-        'gambar_1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'gambar_2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'gambar_3' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        'gambar_4' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    ]);
+        $request->validate([
+            'nama_aplikasi' => 'required|string',
+            'golongan' => 'required|string',
+            'link_github' => 'required|string',
+            'link_website' => 'required|string',
+            'link_youtube' => 'required|string',
+            'narasi' => 'required|string',
+            'gambar_1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar_2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar_3' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar_4' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-    // Update data proyek
-    $project->nama_aplikasi = $request->nama_aplikasi;
-    $project->angkatan = $request->angkatan;
-    $project->golongan = $request->golongan;
-    $project->link_youtube = $request->link_youtube;
+        // Update data proyek
+        $project->nama_aplikasi = $request->nama_aplikasi;
+        $project->golongan = $request->golongan;
+        $project->link_github = $request->link_github;
+        $project->link_website = $request->link_website;
+        $project->link_youtube = $request->link_youtube;
+        $project->narasi = $request->narasi;
 
-    // Upload ulang gambar-gambar jika ada yang diunggah
-    foreach (['gambar_1', 'gambar_2', 'gambar_3', 'gambar_4'] as $field) {
-        if ($request->hasFile($field)) {
-            // Hapus file lama jika ada
-            if ($project->{$field}) {
-                Storage::disk('public')->delete($project->{$field});
+        // Upload ulang gambar-gambar jika ada yang diunggah
+        foreach (['gambar_1', 'gambar_2', 'gambar_3', 'gambar_4'] as $field) {
+            if ($request->hasFile($field)) {
+                // Hapus file lama jika ada
+                if ($project->{$field}) {
+                    Storage::disk('public')->delete($project->{$field});
+                }
+                // Upload file baru
+                $gambarPath = $request->file($field)->store('images/project_picture', 'public');
+                $project->{$field} = $gambarPath;
             }
-            // Upload file baru
-            $gambarPath = $request->file($field)->store('images/project_picture', 'public');
-            $project->{$field} = $gambarPath;
         }
-    }
 
-    // Simpan perubahan pada proyek
-    $project->save();
-    
-    // Update project details (members)
-    if ($request->has('anggota')) {
-        // Delete existing project details (members)
-        $project->detail()->delete();
+        // Simpan perubahan pada proyek
+        $project->save();
+        
+        // Update project details (members)
+        if ($request->has('anggota')) {
+            // Dapatkan anggota yang sudah ada
+            $existingMembers = $project->detail->pluck('anggota')->toArray();
 
-        // Create new project details (members)
-        foreach ($request->anggota as $member) {
-            $projectDetail = new ProjectDetail();
-            $projectDetail->project_mahasiswa_id = $project->id;
-            $projectDetail->anggota = $member;
-            $projectDetail->save();
+            // Loop melalui anggota yang ingin ditambahkan
+            foreach ($request->anggota as $member) {
+                // Jika anggota tidak ada dalam daftar anggota yang sudah ada, tambahkan anggota baru
+                if (!in_array($member, $existingMembers)) {
+                    $projectDetail = new ProjectDetail();
+                    $projectDetail->project_mahasiswa_id = $project->id;
+                    $projectDetail->anggota = $member;
+                    $projectDetail->save();
+                }
+            }
         }
-    }
 
-    return redirect()->route('project-mhs')->with('success', 'Proyek berhasil diperbarui.');
-}
+        return redirect()->route('project-mhs')->with('success', 'Proyek berhasil diperbarui.');
+    }
 
 }

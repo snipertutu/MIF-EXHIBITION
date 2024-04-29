@@ -65,6 +65,18 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="telp">Akun Github</label>
+                                        <input type="text" class="form-control" id="github" name="akun_github" placeholder="Akun Github"
+                                            value="{{ auth()->user()->akun_github }}" readonly>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="telp">Akun Linkedin</label>
+                                        <input type="text" class="form-control" id="linkedin" name="akun_linkedin" placeholder="Akun Linkedin"
+                                            value="{{ auth()->user()->akun_linkedin }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="alamat">Alamat</label>
                                         <textarea class="form-control" id="alamat" name="address" rows="3"
@@ -155,7 +167,7 @@
         const profileForm = document.getElementById('profileForm');
         const editButton = document.getElementById('editButton');
         const saveButton = document.getElementById('saveButton');
-        const editableFields = profileForm.querySelectorAll('input[id=telp], textarea[id=alamat], input[id=foto]');
+        const editableFields = profileForm.querySelectorAll('input[id=telp], input[id=github], input[id=linkedin], textarea[id=alamat], input[id=foto]');
         
         editButton.addEventListener('click', function () {
             // Aktifkan hanya field yang bisa di-edit

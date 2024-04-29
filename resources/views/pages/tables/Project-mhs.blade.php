@@ -92,26 +92,33 @@
                         <label for="angkatan">Angkatan</label>
                         <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Angkatan" required>
                         <label for="golongan">Golongan</label>
-                        <input type="text" class="form-control" id="golongan" name="golongan" placeholder="Golongan" required>
+                            <select class="form-control" id="golongan" name="golongan" required>
+                                <option value="">Pilih Golongan</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="INTER">INTER</option>
+                            </select>
+                        <label for="link_website">Link Website</label>
+                        <input type="text" class="form-control" id="link_website" name="link_website" placeholder="Link Website" required>
                         <!-- Input untuk link GitHub -->
                         <div id="link_github_input" style="display: none;">
-                            <label for="link_github">Link GitHub</label>
+                            <label for="link_github">Link GitHub/GIT/LinkTree</label>
                             <input type="text" class="form-control" id="link_github" name="link_github" placeholder="Link GitHub">
-                        </div>
-                        <!-- Input untuk link Git -->
-                        <div id="link_git_input" style="display: none;">
-                            <label for="link_git">Link Git</label>
-                            <input type="text" class="form-control" id="git" name="git" placeholder="Link Git">
                         </div>
                         <!-- Input untuk ketua kelompok dan anggota kelompok hanya muncul jika kategori "Workshop" dipilih -->
                         <div id="workshop-inputs" style="display: none;">
                             <label for="ketua_kelompok">Ketua Kelompok</label>
-                            <input type="text" class="form-control" id="ketua_kelompok" name="ketua_kelompok" placeholder="Ketua Kelompok">
+                            <input type="text" class="form-control" id="ketua_kelompok" name="ketua_kelompok" placeholder="Ketua Kelompok" value="{{ Auth::user()->nim }}" readonly>
                             <label for="anggota">Anggota Kelompok (pisahkan dengan koma)</label>
                             <select class="form-control" id="anggota" name="anggota[]" multiple="multiple" style="width: 100%;">
                                 <!-- Options akan ditambahkan secara dinamis menggunakan JavaScript -->
                             </select>
                         </div>
+                        <label for="narasi">Narasi</label>
+                        <textarea class="form-control" id="narasi" name="narasi" placeholder="Narasi" rows="3" required></textarea>
                         <button id="step-2-next-btn" type="button" class="btn btn-primary mt-3">Selanjutnya</button>
                         <button id="step-2-back-btn" type="button" class="btn btn-secondary mt-3">Kembali</button>
                     </div>
@@ -158,19 +165,21 @@
                     <label for="angkatan{{ $project->id }}">Angkatan</label>
                     <input type="text" class="form-control" id="angkatan{{ $project->id }}" name="angkatan" value="{{ $project->angkatan }}" required>
                     <label for="golongan{{ $project->id }}">Golongan</label>
-                    <input type="text" class="form-control" id="golongan{{ $project->id }}" name="golongan" value="{{ $project->golongan }}" required>
-
-                    <!-- Menampilkan input link GitHub jika kategori workshop dan semester 1-2 atau kategori tugas akhir -->
-                    @if(($project->kategori === 'Workshop' && $project->semester >= 3) || $project->kategori === 'Tugas Akhir')
+                        <select class="form-control" id="golongan{{ $project->id }}" name="golongan" required>
+                            <option value="">Pilih Golongan</option>
+                            <option value="A" @if($project->golongan == 'A') selected @endif>A</option>
+                            <option value="B" @if($project->golongan == 'B') selected @endif>B</option>
+                            <option value="C" @if($project->golongan == 'C') selected @endif>C</option>
+                            <option value="D" @if($project->golongan == 'D') selected @endif>D</option>
+                            <option value="E" @if($project->golongan == 'E') selected @endif>E</option>
+                            <option value="INTER" @if($project->golongan == 'INTER') selected @endif>INTER</option>
+                        </select>
+                    <label for="link_website{{ $project->id }}">Link Website</label>
+                    <input type="text" class="form-control" id="link_website{{ $project->id }}" name="link_website" value="{{ $project->link_website }}" required>
                     <label for="link_github{{ $project->id }}">Link GitHub</label>
                     <input type="text" class="form-control" id="link_github{{ $project->id }}" name="link_github" value="{{ $project->link_github }}" required>
-                    @endif
-
-                    <!-- Menampilkan input link Git jika kategori workshop dan semester 3-8 -->
-                    @if($project->kategori === 'Workshop' && $project->semester <= 2)
-                    <label for="link_git{{ $project->id }}">Link Git</label>
-                    <input type="text" class="form-control" id="git{{ $project->id }}" name="git" value="{{ $project->git }}" required>
-                    @endif
+                    <label for="narasi{{ $project->id }}">Narasi</label>
+                    <textarea type="text" class="form-control" id="narasi{{ $project->id }}" name="narasi" rows="3" required>{{ $project->narasi }}</textarea>
 
                     <!-- Menampilkan input ketua kelompok dan anggota kelompok jika kategori Workshop -->
                     @if($project->kategori === 'Workshop')
@@ -200,7 +209,7 @@
                                 tags: true,
                                 tokenSeparators: [',', ' '],
                                 ajax: {
-                                    url: '/search',
+                                    url: '/searchs',
                                     dataType: 'json',
                                     delay: 250,
                                     processResults: function(data) {
@@ -308,40 +317,23 @@
 
         // Menyembunyikan/menampilkan input sesuai dengan kategori yang dipilih
         if (kategori === 'Tugas Akhir') {
-            $('#link_git_input').hide();
-            $('#link_github_input').show();
             $('#workshop-inputs').hide();
+            $('#link_github_input').show();
         } else if (kategori === 'Workshop') {
-            $('#link_github_input').hide(); 
-            $('#link_git_input').show();
             $('#workshop-inputs').show();
+            $('#link_github_input').show();
         }
 
         // Menyesuaikan opsi semester sesuai dengan kategori yang dipilih
         $('#semester').empty();
         if (kategori === 'Tugas Akhir') {
-            for (var i = 6; i <= 8; i++) {
+            for (var i = 6;i <= 6; i++) {
                 $('#semester').append('<option value="' + i + '">' + i + '</option>');
             }
         } else if (kategori === 'Workshop') {
-            for (var i = 1; i <= 8; i++) {
+            for (var i = 1; i <= 4; i++) {
                 $('#semester').append('<option value="' + i + '">' + i + '</option>');
             }
-        }
-    });
-
-    // Event listener untuk pemilihan semester
-    $('#semester').change(function() {
-        var semester = parseInt($(this).val());
-        var kategori = $('#kategori').val();
-
-        // Menyesuaikan tampilan input link (Git/GitHub) sesuai dengan kategori dan semester yang dipilih
-        if (kategori === 'Workshop' && semester >= 3) {
-            $('#link_git_input').hide();
-            $('#link_github_input').show();
-        } else if (kategori === 'Workshop' && semester <= 2) {
-            $('#link_github_input').hide();
-            $('#link_git_input').show();
         }
     });
 
@@ -383,7 +375,7 @@
             tags: true, // Memungkinkan tambahan opsi yang tidak ada dalam daftar
             tokenSeparators: [',', ' '], // Pisahkan opsi yang dipilih dengan koma atau spasi
             ajax: {
-                url: '/search', // Endpoint untuk mencari anggota
+                url: '/searchs', // Endpoint untuk mencari anggota
                 dataType: 'json',
                 delay: 250,
                 processResults: function(data) {

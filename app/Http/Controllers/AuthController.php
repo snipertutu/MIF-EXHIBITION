@@ -70,36 +70,49 @@ class AuthController extends Controller
     {
         return view('pages.auth.register');
     }
-
+    
     public function register(Request $request)
     {
-    $validator = $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'nim' => ['required', 'string', 'max:20'],
-        'angkatan' => ['required', 'numeric'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', 'string', 'min:8', 'confirmed'],
-    ]);
-
-    $user = User::create([
-        'name' => $validator['name'],
-        'nim' => $validator['nim'],
-        'angkatan' => $validator['angkatan'],
-        'email' => $validator['email'],
-        'password' => Hash::make($validator['password']),
-        'role' => 'mahasiswa',
-    ]);
-
-    Auth::login($user);
-
-    return redirect('/mhs');
+        // Temukan pengguna berdasarkan NIM
+        $user = User::where('nim', $request->nim)->first();
+    
+        // Jika pengguna dengan NIM tersebut sudah ada
+        if ($user) {
+            // Validasi input
+            $validator = Validator::make($request->all(), [
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+    
+            // Jika validasi gagal
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+    
+            // Jika validasi berhasil, gunakan akun yang sudah ada dengan NIM tersebut
+            $user->update([
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+    
+            // Melakukan login setelah registrasi
+            Auth::login($user);
+    
+            return redirect('/mhs');
+        } else {
+            // Jika pengguna dengan NIM tersebut belum ada
+            return redirect()->back()->withErrors(['nim' => 'NIM tidak terdaftar. Mohon periksa kembali.'])->withInput();
+        }
     }
+    
 
     public function updateProfile(Request $request)
     {
         // Validasi data yang dikirimkan
         $request->validate([
             'phone_number' => 'nullable|string|max:20',
+            'akun_github' => 'nullable|string|max:20',
+            'akun_linkedin' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan aturan validasi yang diperlukan
         ], [
@@ -111,6 +124,8 @@ class AuthController extends Controller
     
         // Update data pada user
         $user->phone_number = $request->phone_number;
+        $user->akun_github= $request->akun_github;
+        $user->akun_linkedin= $request->akun_linkedin;
         $user->address = $request->address;
     
         // Cek apakah ada file foto yang dikirimkan
