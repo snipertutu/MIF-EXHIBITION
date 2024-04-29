@@ -154,8 +154,8 @@
                                 <li><strong>Angkatan</strong> <span>{{ $project->angkatan }}</span></li>
                                 <li><strong>Semester</strong> <span>{{ $project->semester}}</span></li>
                                 <li><strong>Golongan</strong> <span>{{ $project->golongan}}</span></li>
-                                <li><strong>phone</strong> <span>{{ $project->phone_number}}</span></li>
-                                <li><strong>email</strong> <span>{{ $project->email}}</span></li>
+                                <li><strong>phone</strong> <span>{{ $project->user->phone_number}}</span></li>
+                                <li><strong>email</strong> <span>{{ $project->user->email}}</span></li>
                                 <li><strong>Github Projek</strong> <a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
                                 <li><strong>website</strong><a href="{{ $project->link_website }}">{{ $project->link_website }}</a></li>
                                 <!-- <li><strong>video youtube</strong><a href="{{ $project->link_youtube }}">{{ $project->link_youtube }}</a></li> -->
