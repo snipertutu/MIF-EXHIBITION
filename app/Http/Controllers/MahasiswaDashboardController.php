@@ -9,6 +9,6 @@ class MahasiswaDashboardController extends Controller
 
     public function index()
     {
-        return view('dashboard-mhs');
+        return view('pages.user-pages.profile-mhs');
     }
 }

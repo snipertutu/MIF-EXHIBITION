@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('golongan');
             $table->string('ketua_kelompok')->nullable();
             $table->enum('kategori', ['Tugas Akhir', 'Workshop'])->nullable();
-            $table->string('git')->nullable();
             $table->string('link_github')->nullable();
+            $table->string('link_website')->nullable();
             $table->string('link_youtube')->nullable();
+            $table->string('narasi')->nullable();
             $table->string('gambar_1')->nullable();
             $table->string('gambar_2')->nullable();
             $table->string('gambar_3')->nullable();

@@ -10,19 +10,6 @@
           @csrf
           <div class="form-group">
             <div class="input-group">
-              <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lengkap" value="{{ old('name') }}">
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i class="mdi mdi-account"></i>
-                </span>
-              </div>
-            </div>
-            @error('name')
-            <div class="text-danger">{{ $message }}</div>
-            @enderror
-          </div>
-          <div class="form-group">
-            <div class="input-group">
               <input type="text" id="nim" name="nim" class="form-control" placeholder="NIM" value="{{ old('nim') }}">
               <div class="input-group-append">
                   <span class="input-group-text">
@@ -31,19 +18,6 @@
               </div>
             </div>
             @error('nim')
-            <div class="text-danger">{{ $message }}</div>
-            @enderror
-          </div>
-          <div class="form-group">
-            <div class="input-group">
-              <input type="text" id="angkatan" name="angkatan" class="form-control" placeholder="Masukkan Angkatan" value="{{ old('angkatan') }}">
-              <div class="input-group-append">
-                <span class="input-group-text">
-                  <i class="mdi mdi-calendar"></i>
-                </span>
-              </div>
-            </div>
-            @error('angkatan')
             <div class="text-danger">{{ $message }}</div>
             @enderror
           </div>

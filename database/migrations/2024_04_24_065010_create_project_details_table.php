@@ -15,7 +15,7 @@ class CreateProjectDetailsTable extends Migration
     {
         Schema::create('project_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('anggota');
+            $table->unsignedBigInteger('anggota')->nullable();
             $table->unsignedBigInteger('project_mahasiswa_id');
             $table->timestamps();
 

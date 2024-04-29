@@ -24,6 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone_number',
+        'akun_github',
+        'akun_linkedin',
         'address',
         'profile_picture',
         'role',
