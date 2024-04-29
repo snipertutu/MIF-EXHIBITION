@@ -89,12 +89,27 @@ class ProjectAdminController extends Controller
         
         // Update project details (members)
         if ($request->has('anggota')) {
-            // Hapus dulu detail anggota yang ada
-            $project->detail()->delete();
+            // Ambil anggota yang dipilih dari form
+            $selectedMembers = $request->anggota;
+    
+            // Hapus anggota yang tidak dipilih dari database
+            $project->detail()->whereNotIn('anggota', $selectedMembers)->delete();
+    
+            // Tambahkan anggota yang dipilih jika belum ada dalam database
+            foreach ($selectedMembers as $member) {
+                $existingMember = $project->detail()->where('anggota', $member)->first();
+                if (!$existingMember) {
+                    $project->detail()->create([
+                        'anggota' => $member,
+                    ]);
+                }
+            }
         }
-
+    
         return redirect()->route('project.index')->with('success', 'Proyek berhasil diperbarui.');
     }
+    
+
 
     public function delete($id)
     {

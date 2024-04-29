@@ -159,7 +159,7 @@
             <form id="editProjectForm{{ $project->id }}" action="{{ route('projects.update', $project->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="modal-body">
+                <div class="modal-body" style="max-height: 500px; overflow-y: auto;">
                     <label for="nama_aplikasi{{ $project->id }}">Nama Aplikasi</label>
                     <input type="text" class="form-control" id="nama_aplikasi{{ $project->id }}" name="nama_aplikasi" value="{{ $project->nama_aplikasi }}" required>
                     <label for="angkatan{{ $project->id }}">Angkatan</label>
