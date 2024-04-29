@@ -84,14 +84,15 @@
         <section id="project-details" class="project-details">
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-                <!-- <div class="position-relative d-flex justify-content-center align-items-center h-100">
+                <div class="position-relative d-flex justify-content-center align-items-center h-100">
                     < src="{{ $project->link_youtube }}" alt="" style="max-width: 100%;">
                     <iframe width="560" height="315" src="{{ $project->link_youtube }}" frameborder="0" allowfullscreen></iframe>
                     <a href="{{ $project->link_youtube }}" width="560" height="315 frameborder="0" ></a>
-                </div> -->
+                </div>
             
 
                 <div class="row justify-content-between gy-4 mt-4">
+                    
 
                     <div class="col-lg-9 row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
 
@@ -137,6 +138,10 @@
                                 </div>
                             </div>
                         </div>
+                        <h5><strong>{{ $project->nama_aplikasi }}</strong></h5>
+                        <h5>Oleh :</h5>
+                        <h5><span>{{ $project->ketua_kelompok }}{{ $project->ketua_anggota }}</span></h5>
+                        <p>{{ $project->narasi }}</p>
 
                     </div>
 
@@ -149,8 +154,11 @@
                                 <li><strong>Angkatan</strong> <span>{{ $project->angkatan }}</span></li>
                                 <li><strong>Semester</strong> <span>{{ $project->semester}}</span></li>
                                 <li><strong>Golongan</strong> <span>{{ $project->golongan}}</span></li>
+                                <li><strong>phone</strong> <span>{{ $project->phone_number}}</span></li>
+                                <li><strong>email</strong> <span>{{ $project->email}}</span></li>
                                 <li><strong>Github Projek</strong> <a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
-                                <li><strong>video youtube</strong><a href="{{ $project->link_youtube }}">{{ $project->link_youtube }}</a></li>
+                                <li><strong>website</strong><a href="{{ $project->link_website }}">{{ $project->link_website }}</a></li>
+                                <!-- <li><strong>video youtube</strong><a href="{{ $project->link_youtube }}">{{ $project->link_youtube }}</a></li> -->
                                 <!-- <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li> -->
                             </ul>
                         </div>
