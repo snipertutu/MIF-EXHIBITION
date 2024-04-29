@@ -182,7 +182,8 @@
 
           <div class="col-lg-3 col-md-3">
             <div class="footer-info">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1974.712050904118!2d113.72176629338655!3d-8.1599551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d8f623%3A0xf6c4437632474338!2sPoliteknik%20Negeri%20Jember!5e0!3m2!1sid!2sid!4v1714060623494!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31595.345473182497!2d113.69928700358207!3d-8.160553797868172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b5fde95a51%3A0xa6fbfa55a4d83c8c!2sPoliklinik%20POLIJE!5e0!3m2!1sid!2sid!4v1714356798356!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1974.712050904118!2d113.72176629338655!3d-8.1599551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d8f623%3A0xf6c4437632474338!2sPoliteknik%20Negeri%20Jember!5e0!3m2!1sid!2sid!4v1714060623494!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div> -->
           </div>
 
         </div>
