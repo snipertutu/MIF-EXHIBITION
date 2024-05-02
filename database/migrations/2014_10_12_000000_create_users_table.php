@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('nim');
             $table->unsignedSmallInteger('angkatan')->nullable();
-            $table->string('email');
-            $table->string('password');
+            $table->string('email')->nullable();
+            $table->string('password')->default(Hash::make('defaultpassword'));
             $table->string('phone_number')->nullable();
             $table->string('akun_github')->nullable();
             $table->string('akun_linkedin')->nullable();

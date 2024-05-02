@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\UploadDataController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -87,7 +88,7 @@ Route::get('/homepage', [AdminCarouselController::class, 'index'])->name('homepa
 Route::post('/homepage', [AdminCarouselController::class, 'store'])->name('homepage.store');
 Route::delete('/homepage/{id}', [AdminCarouselController::class, 'destroy'])->name('homepage.destroy');
 
-
+Route::post('/upload-excel', [UploadDataController::class, 'upload'])->name('upload.excel');
 
 
 Route::get('/project-details', function () {
