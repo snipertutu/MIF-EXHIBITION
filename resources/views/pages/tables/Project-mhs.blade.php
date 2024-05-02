@@ -146,6 +146,7 @@
 </div>
 
 @foreach($projects as $project)
+
 <!-- Modal Edit Proyek -->
 <div class="modal fade" id="editProjectModal{{ $project->id }}" tabindex="-1" role="dialog" aria-labelledby="editProjectModalLabel{{ $project->id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document" style="max-width: 90%">
