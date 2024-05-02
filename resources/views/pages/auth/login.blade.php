@@ -45,18 +45,16 @@
           </div>
         </form>
       </div>
-      <ul class="auth-footer">
-        <li>
-          <a href="#">Conditions</a>
-        </li>
-        <li>
-          <a href="#">Help</a>
-        </li>
-        <li>
-          <a href="#">Terms</a>
-        </li>
-      </ul>
-      <p class="footer-text text-center">copyright © 2018 Bootstrapdash. All rights reserved.</p>
+      <div class="footer-legal text-center position-relative">
+            <div class="container">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>MIF EXHIBITION</span></strong>. All Rights Reserved
+                </div>
+                <div class="credits">
+                    Designed by MIF POLIJE
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </div>

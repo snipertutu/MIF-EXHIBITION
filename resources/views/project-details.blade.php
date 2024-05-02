@@ -10,7 +10,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ asset('assets/img/favicon.png')}}" rel="icon">
+    <link href="{{ asset('assets/img/MIF.png')}}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -85,9 +85,11 @@
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
                 <div class="position-relative d-flex justify-content-center align-items-center h-100">
-                    < src="{{ $project->link_youtube }}" alt="" style="max-width: 100%;">
-                    <iframe width="560" height="315" src="{{ $project->link_youtube }}" frameborder="0" allowfullscreen></iframe>
-                    <a href="{{ $project->link_youtube }}" width="560" height="315 frameborder="0" ></a>
+                    @php
+                        $youtube = explode('v=', $project->link_youtube);
+                    @endphp
+                    <iframe width="560" height="315" src="https://youtube.com/embed/{{ $youtube[1] }}" frameborder="0" allowfullscreen></iframe>
+                    <a href="https://youtube.com/watch?v={{ $youtube[1] }}" width="560" height="315 frameborder="0" ></a>
                 </div>
             
 
