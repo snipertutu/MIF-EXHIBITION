@@ -84,19 +84,17 @@
         <section id="project-details" class="project-details">
             <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-                <div class="position-relative d-flex justify-content-center align-items-center h-100">
-                    @php
-                        $youtube = explode('v=', $project->link_youtube);
-                    @endphp
-                    <iframe width="560" height="315" src="https://youtube.com/embed/{{ $youtube[1] }}" frameborder="0" allowfullscreen></iframe>
-                    <a href="https://youtube.com/watch?v={{ $youtube[1] }}" width="560" height="315 frameborder="0" ></a>
-                </div>
-            
-
                 <div class="row justify-content-between gy-4 mt-4">
                     
 
                     <div class="col-lg-9 row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+                    @php
+                        $youtube = explode('v=', $project->link_youtube);
+                    @endphp
+                    <iframe width="100%" height="400" src="https://youtube.com/embed/{{ $youtube[1] }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <a href="https://youtube.com/watch?v={{ $youtube[1] }}" width="100%" height="400 frameborder="0" ></a>
+                
 
                         <div class="col-md-6 portfolio-item filter-remodeling">
                             <div class="portfolio-content h-100">
@@ -141,8 +139,14 @@
                             </div>
                         </div>
                         <h5><strong>{{ $project->nama_aplikasi }}</strong></h5>
-                        <h5>Oleh :</h5>
-                        <h5><span>{{ $project->ketua_kelompok }}{{ $project->ketua_anggota }}</span></h5>
+                        <h5>dibuat oleh :</h5>
+                        <h6>
+                            @foreach($project->detail as $key => $details)
+                                {{ $details->users->name }}
+                                @if($key != count($project->detail) - 1)
+                                ,
+                                @endif
+                            @endforeach</h6>
                         <p>{{ $project->narasi }}</p>
 
                     </div>
