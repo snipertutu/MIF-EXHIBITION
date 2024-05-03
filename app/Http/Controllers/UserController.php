@@ -42,7 +42,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi data yang dikirim oleh pengguna
+        $request->validate([
+            'nim' => 'required',
+            'name' => 'required',
+            'angkatan' => 'required',
+        ]);
+
+        try {
+            // Simpan data mahasiswa ke dalam database
+            User::create([
+                'nim' => $request->nim,
+                'name' => $request->name,
+                'angkatan' => $request->angkatan,
+            ]);
+
+            // Berikan respons sukses jika penyimpanan berhasil
+            return response()->json(['success' => 'Data mahasiswa berhasil ditambahkan.']);
+        } catch (\Exception $e) {
+            // Tangani kesalahan jika terjadi
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan. Silakan coba lagi.'], 500);
+        }
     }
 
     /**
@@ -72,8 +93,28 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        // Validasi request
+        $request->validate([
+            'id' => 'required|exists:users,id',
+        ]);
+
+        try {
+            // Ambil ID pengguna dari permintaan
+            $userId = $request->input('id');
+
+            // Hapus pengguna dari database
+            User::destroy($userId);
+
+            // Berhasil menghapus, kembalikan respons berhasil
+            return response()->json(['success' => 'Pengguna berhasil dihapus.']);
+        } catch (\Exception $e) {
+            // Tangani kesalahan
+            // Misalnya, log pesan kesalahan
+            \Log::error($e->getMessage());
+            // Kembalikan respons dengan pesan kesalahan yang sesuai
+            return response()->json(['error' => 'Terjadi kesalahan saat menghapus pengguna.'], 500);
+        }
     }
 }
