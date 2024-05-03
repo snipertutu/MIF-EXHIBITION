@@ -82,6 +82,8 @@ Route::delete('/projects/{id}', [ProjectAdminController::class, 'delete'])->name
 
 
 Route::get('tables/mahasiswa', [UserController::class, 'index'])->name('mahasiswa.index');
+Route::post('tables/mahasiswa/store', [UserController::class, 'store'])->name('mahasiswa.store');
+Route::post('tables/mahasiswa/delete', [UserController::class, 'destroy'])->name('mahasiswa.destroy');
 
 
 Route::get('/homepage', [AdminCarouselController::class, 'index'])->name('homepage.index');

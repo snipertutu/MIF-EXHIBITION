@@ -14,6 +14,7 @@
                 <h4 class="card-title">Table Mahasiswa</h4>
                 <!-- Gunakan atribut data-toggle dan data-target untuk memicu modal -->
                 <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalTambahMahasiswa">Tambah Data</button>
+                <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modaladdMahasiswa">Tambah Mahasiswa</button>
                 <div class="table-responsive">
                     <table id="mahasiswa-table" class="table" style="width:100%">
                         <thead>
@@ -34,11 +35,43 @@
 </div>
 
 <!-- Modal Tambah Data Mahasiswa -->
-<div class="modal fade" id="modalTambahMahasiswa" tabindex="-1" role="dialog" aria-labelledby="modalTambahMahasiswaLabel" aria-hidden="true">
+<div class="modal fade" id="modaladdMahasiswa" tabindex="-1" role="dialog" aria-labelledby="modalTambahMahasiswaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTambahMahasiswaLabel">Tambah Data Mahasiswa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formaddMahasiswa" action="{{ route('mahasiswa.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="nim">NIM</label>
+                        <input type="text" class="form-control" id="nim" name="nim" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="angkatan">Angkatan</label>
+                        <input type="number" class="form-control" id="angkatan" name="angkatan" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Tambah Data Mahasiswa berupa file -->
+<div class="modal fade" id="modalTambahMahasiswa" tabindex="-1" role="dialog" aria-labelledby="modalTambahMahasiswaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTambahMahasiswaLabel">Upload Data Mahasiswa</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -69,7 +102,7 @@
 <script>
     $(document).ready(function() {
         // Inisialisasi DataTable setelah dokumen dimuat
-        $('#mahasiswa-table').DataTable({
+        var table = $('#mahasiswa-table').DataTable({
             processing: true,
             serverSide: true,
             ajax: '{{ route("mahasiswa.index") }}', // Sesuaikan dengan route yang menangani permintaan Ajax
@@ -79,7 +112,11 @@
                 { data: 'nim', name: 'nim' },
                 { data: 'phone_number', name: 'phone_number' },
                 { data: 'angkatan', name: 'angkatan' },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
+                { data: 'action', name: 'action', orderable: false, searchable: false, 
+                    render: function (data, type, full, meta) {
+                        return '<button class="btn btn-danger btn-delete" data-id="' + full.id + '">Hapus</button>';
+                    }
+                }
             ]
         });
 
@@ -109,7 +146,62 @@
                 }
             });
         });
+
+        $('#formaddMahasiswa').on('submit', function(e) {
+            e.preventDefault(); // Mencegah pengiriman formulir secara default
+            
+            // Mengumpulkan data dari formulir
+            var formData = $(this).serialize();
+
+            // Kirim permintaan AJAX untuk menyimpan data mahasiswa
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                    // Tutup modal setelah penyimpanan berhasil
+                    $('#modaladdMahasiswa').modal('hide');
+
+                    // Refresh tabel mahasiswa setelah penyimpanan berhasil
+                    $('#mahasiswa-table').DataTable().ajax.reload();
+
+                    // Tampilkan pesan sukses kepada pengguna
+                    alert('Data mahasiswa berhasil ditambahkan.');
+
+                    // Merefresh halaman setelah alert diklik
+                    window.location.reload();
+                },
+                error: function(xhr, status, error) {
+                    // Tampilkan pesan kesalahan jika penyimpanan gagal
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            });
+        });
+
+        // Menangani klik tombol hapus
+        $('#mahasiswa-table').on('click', '.btn-delete', function () {
+            if (confirm('Anda yakin ingin menghapus data ini?')) {
+                var id = $(this).data('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("mahasiswa.destroy") }}', // Sesuaikan dengan route penghapusan data
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id
+                    },
+                    success: function (data) {
+                        // Refresh tabel setelah penghapusan berhasil
+                        table.ajax.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        // Tampilkan pesan kesalahan jika penghapusan gagal
+                        alert('Terjadi kesalahan. Silakan coba lagi.');
+                    }
+                });
+            }
+        });
     });
 </script>
 @endpush
+
 
