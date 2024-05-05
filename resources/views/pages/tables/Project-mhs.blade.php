@@ -127,13 +127,13 @@
                     <div id="step-3" style="display: none;">
                         <label for="link_youtube">Link Youtube</label>
                         <input type="text" class="form-control" id="link_youtube" name="link_youtube" placeholder="Link Youtube" required>
-                        <label for="gambar_1">Gambar 1</label>
+                        <label for="gambar_1">Banner</label>
                         <input type="file" class="form-control-file" id="gambar_1" name="gambar_1" required>
-                        <label for="gambar_2">Gambar 2</label>
+                        <label for="gambar_2">Gambar 1</label>
                         <input type="file" class="form-control-file" id="gambar_2" name="gambar_2" required>
-                        <label for="gambar_3">Gambar 3</label>
+                        <label for="gambar_3">Gambar 2</label>
                         <input type="file" class="form-control-file" id="gambar_3" name="gambar_3" required>
-                        <label for="gambar_4">Gambar 4</label>
+                        <label for="gambar_4">Gambar 3</label>
                         <input type="file" class="form-control-file" id="gambar_4" name="gambar_4" required>
                         <button id="step-3-next-btn" type="submit" class="btn btn-primary mt-3">Tambah</button>
                         <button id="step-3-back-btn" type="button" class="btn btn-secondary mt-3">Kembali</button>
@@ -193,13 +193,13 @@
 
                     <label for="edit_link_youtube{{ $project->id }}">Link Youtube</label>
                     <input type="text" class="form-control" id="edit_link_youtube{{ $project->id }}" name="link_youtube" value="{{ $project->link_youtube }}" required>
-                    <label for="edit_gambar_1{{ $project->id }}">Gambar 1</label>
+                    <label for="edit_gambar_1{{ $project->id }}">Banner</label>
                     <input type="file" class="form-control-file" id="edit_gambar_1{{ $project->id }}" name="gambar_1">
-                    <label for="edit_gambar_2{{ $project->id }}">Gambar 2</label>
+                    <label for="edit_gambar_2{{ $project->id }}">Gambar 1</label>
                     <input type="file" class="form-control-file" id="edit_gambar_2{{ $project->id }}" name="gambar_2">
-                    <label for="edit_gambar_3{{ $project->id }}">Gambar 3</label>
+                    <label for="edit_gambar_3{{ $project->id }}">Gambar 2</label>
                     <input type="file" class="form-control-file" id="edit_gambar_3{{ $project->id }}" name="gambar_3">
-                    <label for="edit_gambar_4{{ $project->id }}">Gambar 4</label>
+                    <label for="edit_gambar_4{{ $project->id }}">Gambar 3</label>
                     <input type="file" class="form-control-file" id="edit_gambar_4{{ $project->id }}" name="gambar_4">
 
                     <!-- Script JavaScript untuk inisialisasi Select2 dan memuat data anggota -->

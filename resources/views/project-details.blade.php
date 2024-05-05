@@ -138,32 +138,39 @@
                                 </div>
                             </div>
                         </div>
-                        <h5><strong>{{ $project->nama_aplikasi }}</strong></h5>
-                        <h5>dibuat oleh :</h5>
-                        <h6>
-                            @foreach($project->detail as $key => $details)
-                                {{ $details->users->name }}
-                                @if($key != count($project->detail) - 1)
-                                ,
-                                @endif
-                            @endforeach</h6>
-                        <p>{{ $project->narasi }}</p>
+                        <div style="font-family: Arial, sans-serif;">
+                            <h5 style="margin-bottom: 5px;">
+                                <strong style="text-transform: capitalize;">{{ $project->nama_aplikasi }}</strong>
+                            </h5>
+                            <div style="margin-bottom: 10px;">
+                                <h5 style="margin: 0;">Dibuat oleh :</h5>
+                                <h6 style="margin-top: 5px;">
+                                    @foreach($project->detail as $key => $details)
+                                        {{ $details->users->name }}
+                                        @if($key != count($project->detail) - 1)
+                                            ,
+                                        @endif
+                                    @endforeach
+                                </h6>
+                            </div>
+                            <p style="margin-top: 0;">{{ $project->narasi }}</p>
+                        </div>
 
                     </div>
 
                     <div class="col-lg-3">
                         <div class="portfolio-info">
                             <h3>Informasi Projek</h3>
-                            <ul>
-                                <li><strong>Nama Aplikasi</strong> <span>{{ $project->nama_aplikasi }}</span></li>
-                                <li><strong>Nama Ketua </strong> <span>{{ $project->ketua_kelompok }}</span></li>
-                                <li><strong>Angkatan</strong> <span>{{ $project->angkatan }}</span></li>
-                                <li><strong>Semester</strong> <span>{{ $project->semester}}</span></li>
-                                <li><strong>Golongan</strong> <span>{{ $project->golongan}}</span></li>
-                                <li><strong>phone</strong> <span>{{ $project->user->phone_number}}</span></li>
-                                <li><strong>email</strong> <span>{{ $project->user->email}}</span></li>
-                                <li><strong>Github Projek</strong> <a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
-                                <li><strong>website</strong><a href="{{ $project->link_website }}">{{ $project->link_website }}</a></li>
+                            <ul style="font-family: Roboto;">
+                                <li><i class="fa-solid fa-laptop""><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Nama Aplikasi</strong></i><span style="text-transform: capitalize;">{{ $project->nama_aplikasi }}</span></li>
+                                <li><i class="fa-solid fa-user"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Nama Ketua </strong></i><span style="text-transform: capitalize;">{{ $project->ketua_kelompok }} {{ $project->user->name}}</span></li>
+                                <li><i class="fa-solid fa-graduation-cap"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">Angkatan</strong></i><span>{{ $project->angkatan }}</span></li>
+                                <li><i class="fa-solid fa-book"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Semester</strong></i><span>{{ $project->semester}}</span></li>
+                                <li><i class="fa-solid fa-book-atlas"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Golongan</strong></i><span>{{ $project->golongan}}</span></li>
+                                <li><i class="fa-solid fa-phone"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   phone</strong></i><span>{{ $project->user->phone_number}}</span></li>
+                                <li><i class="fa-solid fa-envelope"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   email</strong></i><span>{{ $project->user->email}}</span></li>
+                                <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github Projek</strong></i><a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
+                                <li><i class="fa-solid fa-globe"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   website</strong></i><a href="{{ $project->link_website }}">{{ $project->link_website }}</a></li>
                                 <!-- <li><strong>video youtube</strong><a href="{{ $project->link_youtube }}">{{ $project->link_youtube }}</a></li> -->
                                 <!-- <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li> -->
                             </ul>
