@@ -110,6 +110,7 @@ class AuthController extends Controller
     {
         // Validasi data yang dikirimkan
         $request->validate([
+            'email' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:20',
             'akun_github' => 'nullable|string|max:20',
             'akun_linkedin' => 'nullable|string|max:20',
@@ -123,6 +124,7 @@ class AuthController extends Controller
         $user = Auth::user();
     
         // Update data pada user
+        $user->email = $request->email;
         $user->phone_number = $request->phone_number;
         $user->akun_github= $request->akun_github;
         $user->akun_linkedin= $request->akun_linkedin;

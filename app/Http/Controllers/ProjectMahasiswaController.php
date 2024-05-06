@@ -80,18 +80,35 @@ class ProjectMahasiswaController extends Controller
         $project->gambar_3 = $gambarPaths['gambar_3'] ?? null;
         $project->gambar_4 = $gambarPaths['gambar_4'] ?? null;
 
-        $project->save();
-
-        if ($request->has('anggota')) {
-            foreach ($request->anggota as $anggota) {
-                ProjectDetail::create([
-                    'project_mahasiswa_id' => $project->id,
-                    'anggota' => $anggota
-                ]);
-            }
+        // Simpan proyek
+        if ($project->save()) {
+            if ($request->has('anggota')) {
+                foreach ($request->anggota as $anggota) {
+                    // Periksa apakah anggota telah terdaftar dalam proyek lain dengan semester yang sama
+                    $existingProjects = ProjectDetail::where('anggota', $anggota)
+                        ->whereHas('projectMahasiswa', function ($query) use ($project) {
+                            $query->where('semester', $project->semester);
+                        })
+                        ->exists();
+            
+                    // Jika anggota telah terdaftar dalam proyek dengan semester yang sama, abaikan anggota tersebut
+                    if ($existingProjects) {
+                        continue;
+                    }
+            
+                    // Tambahkan anggota ke proyek saat ini
+                    ProjectDetail::create([
+                        'project_mahasiswa_id' => $project->id,
+                        'anggota' => $anggota
+                    ]);
+                }
+            }            
+    
+            return redirect()->route('project-mhs')->with('success', 'Data proyek berhasil ditambahkan.');
+        } else {
+            // Penanganan kesalahan jika penyimpanan proyek gagal
+            return redirect()->back()->with('error', 'Gagal menyimpan data proyek. Silakan coba lagi.');
         }
-
-        return redirect()->route('project-mhs')->with('success', 'Data project berhasil ditambahkan.');
     }
 
 

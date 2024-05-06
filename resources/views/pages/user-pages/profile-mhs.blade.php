@@ -167,7 +167,7 @@
         const profileForm = document.getElementById('profileForm');
         const editButton = document.getElementById('editButton');
         const saveButton = document.getElementById('saveButton');
-        const editableFields = profileForm.querySelectorAll('input[id=telp], input[id=github], input[id=linkedin], textarea[id=alamat], input[id=foto]');
+        const editableFields = profileForm.querySelectorAll('input[id=email], input[id=telp], input[id=github], input[id=linkedin], textarea[id=alamat], input[id=foto]');
         
         editButton.addEventListener('click', function () {
             // Aktifkan hanya field yang bisa di-edit
