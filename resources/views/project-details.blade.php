@@ -203,20 +203,24 @@
                     </div><!-- End footer info column-->
 
                     <div class="col-lg-2 col-md-3 footer-links">
-                        <h4>Useful Links</h4>
+                    <h4>Other Link</h4>
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Terms of service</a></li>
-                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="https://polije.ac.id/" class="active">Polije</a></li>
+                            <li><a href="https://jti.polije.ac.id/">TI POLIJE</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-2 col-md-3 footer-links">
                         <h4>Contact</h4>
-                        <strong>Phone:</strong> +1 5589 55488 55<br>
-                        <strong>Email:</strong> info@example.com<br>
+                        <span style="font-family: Arial, sans-serif;">
+                            <i class="fa-solid fa-phone" style="margin-right: 5px;"></i>
+                            <strong>Phone :</strong> +1 5589 55488 55
+                        </span>
+                        <br>
+                        <span style="font-family: Arial, sans-serif;">
+                            <i class="fa-solid fa-envelope" style="margin-right: 5px;"></i>
+                            <strong>Email :</strong> mifpolije@gmail.com
+                        </span>
                     </div>
 
                     <div class="col-lg-3 col-md-3">

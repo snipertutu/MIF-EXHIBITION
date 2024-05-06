@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>MIF EXHIBITION</title>
+  <title>MIF PROJECT</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -47,7 +47,7 @@
       <a href="index.html" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1>MIF EXHIBITION<span>.</span></h1>
+        <h1>MIF PROJECT<span>.</span></h1>
       </a>
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
@@ -56,7 +56,6 @@
         <ul>
           <li><a href="#home" class="active">Home</a></li>
           <li><a href="#projects">Projects</a></li>
-          <li><a href="supported.html">Supported</a></li>
           <li><a href="#footer">Contact</a></li>
         </ul>
       </nav><!-- .navbar -->
@@ -153,7 +152,7 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="footer-info">
-              <h3>MIF EXHIBITION</h3>
+              <h3>MIF PROJECT</h3>
               <p>
                 Jl.Mastrip, Krajan Timur Sumbersari, <br>
                 Kec.Sumbersari, Kabupaten Jember, <br>
@@ -164,20 +163,32 @@
           </div><!-- End footer info column-->
 
           <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Other Link</h4>
+            <ul>
+              <li><a href="https://polije.ac.id/" class="active">Polije</a></li>
+              <li><a href="https://jti.polije.ac.id/">TI POLIJE</a></li>
+            </ul>
+            <br>
             <h4>Useful Links</h4>
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Terms of service</a></li>
-              <li><a href="#">Privacy policy</a></li>
+              <li><a href="#home" class="active">Home</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#footer">Contact</a></li>
             </ul>
           </div>
+          
 
           <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Contact</h4>
-            <strong>Phone:</strong> +1 5589 55488 55<br>
-            <strong>Email:</strong> info@example.com<br>
+              <h4>Contact</h4>
+              <span style="font-family: Arial, sans-serif;">
+                  <i class="fa-solid fa-phone" style="margin-right: 5px;"></i>
+                  <strong>Phone :</strong> +1 5589 55488 55
+              </span>
+              <br>
+              <span style="font-family: Arial, sans-serif;">
+                  <i class="fa-solid fa-envelope" style="margin-right: 5px;"></i>
+                  <strong>Email :</strong> mifpolije@gmail.com
+              </span>
           </div>
 
           <div class="col-lg-3 col-md-3">
@@ -193,7 +204,7 @@
     <div class="footer-legal text-center position-relative">
       <div class="container">
         <div class="copyright">
-          &copy; Copyright <strong><span>MIF EXHIBITION</span></strong>. All Rights Reserved
+          &copy; Copyright <strong><span>MIF PROJECT</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
           Designed by MIF POLIJE
