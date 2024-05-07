@@ -20,7 +20,7 @@ class ProjectDetail extends Model
         return $this->belongsTo(ProjectMahasiswa::class, 'project_mahasiswa_id');
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class, 'anggota');
     }
