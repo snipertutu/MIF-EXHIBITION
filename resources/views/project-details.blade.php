@@ -151,8 +151,8 @@
                                             <li><i class="fa-solid fa-phone"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   phone :  </strong></i><span><tel>{{ $detail->user->phone_number}}</tel></span></li>
                                             <li><i class="fa-solid fa-envelope"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   email :  </strong></i><span><mail>{{ $detail->user->email}}<mail></span></li>
                                             <!-- Jika setiap user memiliki satu tautan Github dan Linkedin -->
-                                            <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github :  </strong></i><a href="{{ $detail->user->github_link }}">{{ $detail->user->github_username }}</a></li>
-                                            <li><i class="fa-brands fa-linkedin"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Linkedin :  </strong></i><a href="{{ $detail->user->linkedin_link }}">{{ $detail->user->linkedin_username }}</a></li>
+                                            <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github :  </strong></i><a href="{{ $detail->user->akun_github }}">{{ $detail->user->akun_github }}</a></li>
+                                            <li><i class="fa-brands fa-linkedin"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Linkedin :  </strong></i><a href="{{ $detail->user->akun_linkedin }}">{{ $detail->user->akun_linkedin }}</a></li>
                                         </ul>
                                     </li>
                                 @endforeach

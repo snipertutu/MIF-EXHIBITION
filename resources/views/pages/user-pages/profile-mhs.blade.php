@@ -17,7 +17,7 @@
             <div class="card card-small mb-4 pt-3">
                 <div class="card-header border-bottom text-center">
                     <div class="mb-3 mx-auto">
-                    <img class="user-avatar rounded-circle mr-2" src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="User Avatar" width="150" height="150">
+                    <img class="user-avatar rounded-circle mr-2" src="{{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('assets/img/user.png') }}"  alt="User Avatar" width="150" height="150">
                     </div>
                 </div>
             </div>
