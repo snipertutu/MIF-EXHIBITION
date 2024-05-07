@@ -100,7 +100,7 @@
                             <div class="portfolio-content h-100">
                                 <img src="{{ asset('storage/' . $project->gambar_1) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="{{ asset('storage/' . $project->gambar_1) }}" title="Remodeling 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_1) }}" title="poster"
                                         data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
                                 </div>
@@ -111,7 +111,7 @@
                             <div class="portfolio-content h-100">
                                 <img src="{{ asset('storage/' . $project->gambar_2) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="{{ asset('storage/' . $project->gambar_2) }}" title="Construction 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_2) }}" title="gambar 1"
                                         data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
                                 </div>
@@ -121,7 +121,7 @@
                             <div class="portfolio-content h-100">
                                 <img src="{{ asset('storage/' . $project->gambar_3) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="{{ asset('storage/' . $project->gambar_3) }}" title="Remodeling 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_3) }}" title="gambar 2"
                                         data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
                                 </div>
@@ -132,7 +132,7 @@
                             <div class="portfolio-content h-100">
                                 <img src="{{ asset('storage/' . $project->gambar_4) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
-                                    <a href="{{ asset('storage/' . $project->gambar_4) }}" title="Construction 1"
+                                    <a href="{{ asset('storage/' . $project->gambar_4) }}" title="gambar 3"
                                         data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
                                             class="bi bi-zoom-in"></i></a>
                                 </div>
@@ -145,11 +145,16 @@
                             <div style="margin-bottom: 10px;">
                                 <h5 style="margin: 0;">Dibuat oleh :</h5>
                                 <h6 style="margin-top: 5px;">
-                                    @foreach($project->detail as $key => $details)
-                                        {{ $details->users->name }}
-                                        @if($key != count($project->detail) - 1)
-                                            ,
-                                        @endif
+                                    @foreach($project->detail as $details)
+                                    <li>{{ $details->users->name }}
+                                        <ul>   
+                                            <li><i class="fa-solid fa-phone"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   phone :  </strong></i><span><tel>{{ $project->user->phone_number}}</tel></span></li>
+                                            <li><i class="fa-solid fa-envelope"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   email :  </strong></i><span><mail>{{ $project->user->email}}<mail></span></li>
+                                            <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github :  </strong></i><a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
+                                            <li><i class="fa-brands fa-linkedin"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Linkedin :  </strong></i><a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
+                                        </ul>
+                                    </li>
+                                    
                                     @endforeach
                                 </h6>
                             </div>
@@ -246,6 +251,27 @@
 
     </footer>
     <!-- End Footer -->
+
+    <--tampilan-->
+<div class="modal fade" id="details_user" tabindex="-1" role="dialog" aria-labelledby="modalTambahMahasiswaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTambahMahasiswaLabel">$details->users->name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li><i class="fa-solid fa-phone"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   phone</strong></i><span>{{ $project->user->phone_number}}</span></li>
+                    <li><i class="fa-solid fa-envelope"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   email</strong></i><span>{{ $project->user->email}}</span></li>
+                    <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github Projek</strong></i><a href="{{ $project->link_github }}">{{ $project->nama_aplikasi }}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
