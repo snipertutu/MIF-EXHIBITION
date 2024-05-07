@@ -66,6 +66,41 @@
     </div>
 </div>
 
+<!-- Modal Edit Data Mahasiswa -->
+<div class="modal fade" id="modalEditMahasiswa" tabindex="-1" role="dialog" aria-labelledby="modalEditMahasiswaLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditMahasiswaLabel">Edit Data Mahasiswa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditMahasiswa" action="{{ route('mahasiswa.update') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" id="edit_id">
+                    <div class="form-group">
+                        <label for="edit_nim">NIM</label>
+                        <input type="text" class="form-control" id="edit_nim" name="nim" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_name">Nama</label>
+                        <input type="text" class="form-control" id="edit_name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_angkatan">Angkatan</label>
+                        <input type="number" class="form-control" id="edit_angkatan" name="angkatan" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Modal Tambah Data Mahasiswa berupa file -->
 <div class="modal fade" id="modalTambahMahasiswa" tabindex="-1" role="dialog" aria-labelledby="modalTambahMahasiswaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -114,7 +149,8 @@
                 { data: 'angkatan', name: 'angkatan' },
                 { data: 'action', name: 'action', orderable: false, searchable: false, 
                     render: function (data, type, full, meta) {
-                        return '<button class="btn btn-danger btn-delete" data-id="' + full.id + '">Hapus</button>';
+                        return '<button class="btn btn-danger btn-delete" data-id="' + full.id + '">Hapus</button>' + 
+                               '<button class="btn btn-primary btn-edit" data-id="' + full.id + '">Edit</button>';
                     }
                 }
             ]
@@ -199,6 +235,61 @@
                     }
                 });
             }
+        });
+
+        // Menangani klik tombol edit
+        $('#mahasiswa-table').on('click', '.btn-edit', function () {
+            // Mendapatkan ID mahasiswa dari tombol edit yang diklik
+            var id = $(this).data('id');
+
+            // Mendapatkan data mahasiswa yang akan diedit menggunakan permintaan AJAX
+            $.ajax({
+                type: 'GET',
+                url: '/mahasiswa/' + id + '/edit', // Sesuaikan dengan route yang menangani permintaan edit
+                success: function (response) {
+                    // Mengisi formulir edit dengan data mahasiswa yang diperoleh
+                    $('#edit_id').val(response.id);
+                    $('#edit_nim').val(response.nim);
+                    $('#edit_name').val(response.name);
+                    $('#edit_angkatan').val(response.angkatan);
+
+                    // Menampilkan modal edit
+                    $('#modalEditMahasiswa').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    // Tampilkan pesan kesalahan jika pengambilan data gagal
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            });
+        });
+
+        // Menangani pengiriman formulir edit
+        $('#formEditMahasiswa').on('submit', function(e) {
+            e.preventDefault(); // Mencegah pengiriman formulir secara default
+            
+            // Mengumpulkan data dari formulir edit
+            var formData = $(this).serialize();
+
+            // Kirim permintaan AJAX untuk menyimpan pembaruan data mahasiswa
+            $.ajax({
+                type: 'PUT',
+                url: $(this).attr('action'), // Sesuaikan dengan route yang menangani pembaruan data
+                data: formData,
+                success: function(response) {
+                    // Tutup modal edit setelah pembaruan berhasil
+                    $('#modalEditMahasiswa').modal('hide');
+
+                    // Refresh tabel mahasiswa setelah pembaruan berhasil
+                    $('#mahasiswa-table').DataTable().ajax.reload();
+
+                    // Tampilkan pesan sukses kepada pengguna
+                    alert('Data mahasiswa berhasil diperbarui.');
+                },
+                error: function(xhr, status, error) {
+                    // Tampilkan pesan kesalahan jika pembaruan data gagal
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            });
         });
     });
 </script>

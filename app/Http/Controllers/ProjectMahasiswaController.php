@@ -225,7 +225,19 @@ class ProjectMahasiswaController extends Controller
 
             // Loop melalui anggota yang ingin ditambahkan
             foreach ($request->anggota as $member) {
-                // Jika anggota tidak ada dalam daftar anggota yang sudah ada, tambahkan anggota baru
+                // Periksa apakah anggota telah terdaftar dalam proyek lain dengan semester yang sama
+                $existingProjects = ProjectDetail::where('anggota', $member)
+                    ->whereHas('projectMahasiswa', function ($query) use ($project) {
+                        $query->where('semester', $project->semester);
+                    })
+                    ->exists();
+        
+                // Jika anggota telah terdaftar dalam proyek dengan semester yang sama, abaikan anggota tersebut
+                if ($existingProjects) {
+                    continue;
+                }
+
+                // Jika anggota belum ada dalam daftar anggota yang sudah ada, tambahkan anggota baru
                 if (!in_array($member, $existingMembers)) {
                     $projectDetail = new ProjectDetail();
                     $projectDetail->project_mahasiswa_id = $project->id;

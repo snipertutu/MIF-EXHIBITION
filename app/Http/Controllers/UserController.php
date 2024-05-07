@@ -77,17 +77,39 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        // Mengambil data mahasiswa berdasarkan ID
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Mengirimkan data mahasiswa dalam format JSON
+        return response()->json($mahasiswa);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        // Validasi data yang dikirim dari formulir edit
+        $request->validate([
+            'nim' => 'required',
+            'name' => 'required',
+            'angkatan' => 'required|numeric',
+        ]);
+
+        // Mengambil data mahasiswa berdasarkan ID
+        $mahasiswa = Mahasiswa::findOrFail($request->id);
+
+        // Memperbarui data mahasiswa dengan data yang dikirim dari formulir edit
+        $mahasiswa->update([
+            'nim' => $request->nim,
+            'name' => $request->name,
+            'angkatan' => $request->angkatan,
+        ]);
+
+        // Mengirimkan respons berhasil
+        return response()->json(['message' => 'Data mahasiswa berhasil diperbarui.']);
     }
 
     /**

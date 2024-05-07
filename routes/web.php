@@ -84,12 +84,14 @@ Route::delete('/projects/{id}', [ProjectAdminController::class, 'delete'])->name
 Route::get('tables/mahasiswa', [UserController::class, 'index'])->name('mahasiswa.index');
 Route::post('tables/mahasiswa/store', [UserController::class, 'store'])->name('mahasiswa.store');
 Route::post('tables/mahasiswa/delete', [UserController::class, 'destroy'])->name('mahasiswa.destroy');
+Route::get('tables/mahasiswa/{id}/edit', [UserController::class, 'edit'])->name('mahasiswa.edit');
+Route::post('tables/mahasiswa/update', [UserController::class, 'update'])->name('mahasiswa.update');
+
 
 
 Route::get('/homepage', [AdminCarouselController::class, 'index'])->name('homepage.index');
 Route::post('/homepage', [AdminCarouselController::class, 'store'])->name('homepage.store');
 Route::delete('/homepage/{id}', [AdminCarouselController::class, 'destroy'])->name('homepage.destroy');
-
 Route::post('/upload-excel', [UploadDataController::class, 'upload'])->name('upload.excel');
 
 
