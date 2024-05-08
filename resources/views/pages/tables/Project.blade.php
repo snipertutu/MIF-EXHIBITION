@@ -11,6 +11,9 @@
             <div class="card-body">
                 <h4 class="card-title">Table Project</h4>
                 <p class="card-description">Data Project</p>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Cari nama aplikasi">
+                </div>
                 <div class="table-responsive">
                   <table class="table table-hover">
                       <thead>
@@ -208,6 +211,34 @@
         });
     });
 </script>
+
+<script>
+    // Fungsi untuk menangani pencarian dan menyaring data
+    function searchProjects() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".table");
+        tr = table.getElementsByTagName("tr");
+        
+        // Loop melalui semua baris tabel, sembunyikan yang tidak cocok dengan pencarian
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // Kolom pertama adalah nama aplikasi
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // Tambahkan event listener untuk memanggil fungsi pencarian saat input berubah
+    document.getElementById("searchInput").addEventListener("input", searchProjects);
+</script>
+
 
 <script>
     $(document).ready(function() {
