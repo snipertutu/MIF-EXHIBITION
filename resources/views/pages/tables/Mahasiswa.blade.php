@@ -77,21 +77,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formEditMahasiswa" action="{{ route('mahasiswa.update') }}" method="POST">
+                <form id="formEditMahasiswa" method="POST" action="/mahasiswa/{id}/update">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" id="edit_id">
+                    <input type="hidden" id="edit_id" name="edit_id">
                     <div class="form-group">
                         <label for="edit_nim">NIM</label>
-                        <input type="text" class="form-control" id="edit_nim" name="nim" required>
+                        <input type="text" class="form-control" id="edit_nim" name="edit_nim" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_name">Nama</label>
-                        <input type="text" class="form-control" id="edit_name" name="name" required>
+                        <input type="text" class="form-control" id="edit_name" name="edit_name" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_angkatan">Angkatan</label>
-                        <input type="number" class="form-control" id="edit_angkatan" name="angkatan" required>
+                        <input type="number" class="form-control" id="edit_angkatan" name="edit_angkatan" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </form>
@@ -135,163 +135,126 @@
 
 @push('custom-scripts')
 <script>
-    $(document).ready(function() {
-        // Inisialisasi DataTable setelah dokumen dimuat
-        var table = $('#mahasiswa-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route("mahasiswa.index") }}', // Sesuaikan dengan route yang menangani permintaan Ajax
-            columns: [
-                { data: 'name', name: 'name' },
-                { data: 'email', name: 'email' },
-                { data: 'nim', name: 'nim' },
-                { data: 'phone_number', name: 'phone_number' },
-                { data: 'angkatan', name: 'angkatan' },
-                { data: 'action', name: 'action', orderable: false, searchable: false, 
-                    render: function (data, type, full, meta) {
-                        return '<button class="btn btn-danger btn-delete" data-id="' + full.id + '">Hapus</button>' + 
-                               '<button class="btn btn-primary btn-edit" data-id="' + full.id + '">Edit</button>';
-                    }
-                }
-            ]
-        });
+$(document).ready(function() {
+    var table = $('#mahasiswa-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route("mahasiswa.index") }}',
+        columns: [
+            { data: 'name', name: 'name' },
+            { data: 'email', name: 'email' },
+            { data: 'nim', name: 'nim' },
+            { data: 'phone_number', name: 'phone_number' },
+            { data: 'angkatan', name: 'angkatan' },
+            { data: 'action', name: 'action', orderable: false, searchable: false }
+        ]
+    });
 
-        // Mengirim formulir saat tombol "Upload" diklik
-        $('#btnSubmit').click(function () {
-            $('#formUploadExcel').submit();
-        });
+    $('#btnSubmit').click(function () {
+        $('#formUploadExcel').submit();
+    });
 
-        $('#formUpload').on('submit', function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
+    $('#formUpload').on('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
 
-            $.ajax({
-                type:'POST',
-                url: $(this).attr('action'),
-                data:formData,
-                cache:false,
-                contentType: false,
-                processData: false,
-                success:function(data){
-                    // Tampilkan respons berhasil ke pengguna
-                    alert(data.success);
-                },
-                error: function(xhr, status, error) {
-                    // Tampilkan pesan kesalahan jika upload gagal
-                    alert('Terjadi kesalahan. Silakan coba lagi.');
-                }
-            });
-        });
-
-        $('#formaddMahasiswa').on('submit', function(e) {
-            e.preventDefault(); // Mencegah pengiriman formulir secara default
-            
-            // Mengumpulkan data dari formulir
-            var formData = $(this).serialize();
-
-            // Kirim permintaan AJAX untuk menyimpan data mahasiswa
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formData,
-                success: function(response) {
-                    // Tutup modal setelah penyimpanan berhasil
-                    $('#modaladdMahasiswa').modal('hide');
-
-                    // Refresh tabel mahasiswa setelah penyimpanan berhasil
-                    $('#mahasiswa-table').DataTable().ajax.reload();
-
-                    // Tampilkan pesan sukses kepada pengguna
-                    alert('Data mahasiswa berhasil ditambahkan.');
-
-                    // Merefresh halaman setelah alert diklik
-                    window.location.reload();
-                },
-                error: function(xhr, status, error) {
-                    // Tampilkan pesan kesalahan jika penyimpanan gagal
-                    alert('Terjadi kesalahan. Silakan coba lagi.');
-                }
-            });
-        });
-
-        // Menangani klik tombol hapus
-        $('#mahasiswa-table').on('click', '.btn-delete', function () {
-            if (confirm('Anda yakin ingin menghapus data ini?')) {
-                var id = $(this).data('id');
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route("mahasiswa.destroy") }}', // Sesuaikan dengan route penghapusan data
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: id
-                    },
-                    success: function (data) {
-                        // Refresh tabel setelah penghapusan berhasil
-                        table.ajax.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        // Tampilkan pesan kesalahan jika penghapusan gagal
-                        alert('Terjadi kesalahan. Silakan coba lagi.');
-                    }
-                });
+        $.ajax({
+            type:'POST',
+            url: $(this).attr('action'),
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                alert(data.success);
+            },
+            error: function(xhr, status, error) {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
             }
         });
+    });
 
-        // Menangani klik tombol edit
-        $('#mahasiswa-table').on('click', '.btn-edit', function () {
-            // Mendapatkan ID mahasiswa dari tombol edit yang diklik
-            var id = $(this).data('id');
+    $('#formaddMahasiswa').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
 
-            // Mendapatkan data mahasiswa yang akan diedit menggunakan permintaan AJAX
-            $.ajax({
-                type: 'GET',
-                url: '/mahasiswa/' + id + '/edit', // Sesuaikan dengan route yang menangani permintaan edit
-                success: function (response) {
-                    // Mengisi formulir edit dengan data mahasiswa yang diperoleh
-                    $('#edit_id').val(response.id);
-                    $('#edit_nim').val(response.nim);
-                    $('#edit_name').val(response.name);
-                    $('#edit_angkatan').val(response.angkatan);
-
-                    // Menampilkan modal edit
-                    $('#modalEditMahasiswa').modal('show');
-                },
-                error: function (xhr, status, error) {
-                    // Tampilkan pesan kesalahan jika pengambilan data gagal
-                    alert('Terjadi kesalahan. Silakan coba lagi.');
-                }
-            });
-        });
-
-        // Menangani pengiriman formulir edit
-        $('#formEditMahasiswa').on('submit', function(e) {
-            e.preventDefault(); // Mencegah pengiriman formulir secara default
-            
-            // Mengumpulkan data dari formulir edit
-            var formData = $(this).serialize();
-
-            // Kirim permintaan AJAX untuk menyimpan pembaruan data mahasiswa
-            $.ajax({
-                type: 'PUT',
-                url: $(this).attr('action'), // Sesuaikan dengan route yang menangani pembaruan data
-                data: formData,
-                success: function(response) {
-                    // Tutup modal edit setelah pembaruan berhasil
-                    $('#modalEditMahasiswa').modal('hide');
-
-                    // Refresh tabel mahasiswa setelah pembaruan berhasil
-                    $('#mahasiswa-table').DataTable().ajax.reload();
-
-                    // Tampilkan pesan sukses kepada pengguna
-                    alert('Data mahasiswa berhasil diperbarui.');
-                },
-                error: function(xhr, status, error) {
-                    // Tampilkan pesan kesalahan jika pembaruan data gagal
-                    alert('Terjadi kesalahan. Silakan coba lagi.');
-                }
-            });
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            success: function(response) {
+                $('#modaladdMahasiswa').modal('hide');
+                $('#mahasiswa-table').DataTable().ajax.reload();
+                alert('Data mahasiswa berhasil ditambahkan.');
+                window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
         });
     });
+
+    $('#mahasiswa-table').on('click', '.btn-delete', function () {
+        if (confirm('Anda yakin ingin menghapus data ini?')) {
+            var id = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '{{ route("mahasiswa.destroy") }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id
+                },
+                success: function (data) {
+                    table.ajax.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            });
+        }
+    });
+
+    $('#mahasiswa-table').on('click', '.btn-edit', function () {
+        var id = $(this).data('id');
+        console.log(id);
+
+        $.ajax({
+            type: 'GET',
+            url: '/mahasiswa/' + id + '/edit',
+            success: function (response) {
+                $('#edit_id').val(response.id);
+                $('#edit_nim').val(response.nim);
+                $('#edit_name').val(response.name);
+                $('#edit_angkatan').val(response.angkatan);
+                $('#modalEditMahasiswa').modal('show');
+            },
+            error: function (xhr, status, error) {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        });
+    });
+
+    $('#formEditMahasiswa').on('submit', function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        console.log(formData);
+
+        $.ajax({
+            type: 'PUT',
+            url: '/mahasiswa/' + $('#edit_id').val() + '/update',
+            data: formData,
+            success: function (response) {
+                $('#modalEditMahasiswa').modal('hide');
+                alert(response.message);
+                table.ajax.reload(); // Refresh datatable
+            },
+            error: function (xhr, status, error) {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        });
+    });
+});
+
 </script>
 @endpush
 
