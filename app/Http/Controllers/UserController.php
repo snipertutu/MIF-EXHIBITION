@@ -18,16 +18,17 @@ class UserController extends Controller
             $data = User::where('role', 'mahasiswa')->get();
             return DataTables::of($data)
                 ->addColumn('action', function($row){
-                    return '<button type="button" class="btn btn-icons btn-rounded btn-danger">
-                            <i class="mdi mdi-archive"></i>
-                            </button>';
+                    $button = '<button type="button" class="btn btn-icons btn-rounded btn-danger btn-delete" data-id="'.$row->id.'"><i class="mdi mdi-archive"></i></button>';
+                    $button .= ' <button type="button" class="btn btn-icons btn-rounded btn-primary btn-edit" data-id="'.$row->id.'"><i class="mdi mdi-pencil"></i></button>';
+                    return $button;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
+    
         return view('pages.tables.Mahasiswa');
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -79,38 +80,44 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        // Mengambil data mahasiswa berdasarkan ID
-        $mahasiswa = Mahasiswa::findOrFail($id);
-
-        // Mengirimkan data mahasiswa dalam format JSON
-        return response()->json($mahasiswa);
+        $user = User::find($id);
+        return response()->json($user);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request)
+    
+    
+    
+    public function update(Request $request, $id)
     {
-        // Validasi data yang dikirim dari formulir edit
         $request->validate([
-            'nim' => 'required',
-            'name' => 'required',
-            'angkatan' => 'required|numeric',
+            'nim' => 'sometimes|required',
+            'name' => 'sometimes|required',
+            'angkatan' => 'sometimes|required|numeric',
         ]);
-
-        // Mengambil data mahasiswa berdasarkan ID
-        $mahasiswa = Mahasiswa::findOrFail($request->id);
-
-        // Memperbarui data mahasiswa dengan data yang dikirim dari formulir edit
-        $mahasiswa->update([
-            'nim' => $request->nim,
-            'name' => $request->name,
-            'angkatan' => $request->angkatan,
-        ]);
-
-        // Mengirimkan respons berhasil
-        return response()->json(['message' => 'Data mahasiswa berhasil diperbarui.']);
+    
+        $user = User::find($id);
+        if ($user) {
+            // Memperbarui bidang-bidang yang ada dalam permintaan
+            if ($request->has('edit_nim')) {
+                $user->nim = $request->edit_nim;
+            }
+            if ($request->has('edit_name')) {
+                $user->name = $request->edit_name;
+            }
+            if ($request->has('edit_angkatan')) {
+                $user->angkatan = $request->edit_angkatan;
+            }
+            
+            // Menyimpan perubahan
+            $user->save();
+    
+            return response()->json(['message' => 'Data mahasiswa berhasil diperbarui.']);
+        } else {
+            return response()->json(['error' => 'Data mahasiswa tidak ditemukan.'], 404);
+        }
     }
+    
+      
+    
 
     /**
      * Remove the specified resource from storage.
