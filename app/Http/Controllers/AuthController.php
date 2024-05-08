@@ -112,8 +112,8 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:20',
-            'akun_github' => 'nullable|string|max:20',
-            'akun_linkedin' => 'nullable|string|max:20',
+            'akun_github' => 'nullable|string|max:200',
+            'akun_linkedin' => 'nullable|string|max:200',
             'address' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Sesuaikan dengan aturan validasi yang diperlukan
         ], [

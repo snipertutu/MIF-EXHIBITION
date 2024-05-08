@@ -69,7 +69,7 @@
             </div>
             <form id="addProjectForm" action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="modal-body">
+                <div class="modal-body" style="overflow-y: auto;">
                     <!-- Step 1: Pilih Kategori dan Semester -->
                     <div id="step-1">
                         <label for="kategori">Pilih Kategori Project</label>
@@ -109,9 +109,9 @@
                             <input type="text" class="form-control" id="link_github" name="link_github" placeholder="Link GitHub">
                         </div>
                         <!-- Input untuk ketua kelompok dan anggota kelompok hanya muncul jika kategori "Workshop" dipilih -->
-                        <div id="workshop-inputs" style="display: none;">
-                            <label for="ketua_kelompok">Ketua Kelompok</label>
-                            <input type="text" class="form-control" id="ketua_kelompok" name="ketua_kelompok" placeholder="Ketua Kelompok" value="{{ Auth::user()->nim }}" readonly>
+                        <div id="workshop-inputs" style="display: none;"> -->
+                            <!-- <label for="ketua_kelompok">Ketua Kelompok</label>
+                            <input type="text" class="form-control" id="ketua_kelompok" name="ketua_kelompok" placeholder="Ketua Kelompok" value="{{ Auth::user()->nim }}" readonly> -->
                             <label for="anggota">Anggota Kelompok (pisahkan dengan koma)</label>
                             <select class="form-control" id="anggota" name="anggota[]" multiple="multiple" style="width: 100%;">
                                 <!-- Options akan ditambahkan secara dinamis menggunakan JavaScript -->
@@ -184,8 +184,8 @@
 
                     <!-- Menampilkan input ketua kelompok dan anggota kelompok jika kategori Workshop -->
                     @if($project->kategori === 'Workshop')
-                    <label for="ketua_kelompok{{ $project->id }}">Ketua Kelompok</label>
-                    <input type="text" class="form-control" id="ketua_kelompok{{ $project->id }}" name="ketua_kelompok" value="{{ $project->ketua_kelompok }}" required>
+                    <!-- <label for="ketua_kelompok{{ $project->id }}">Ketua Kelompok</label>
+                    <input type="text" class="form-control" id="ketua_kelompok{{ $project->id }}" name="ketua_kelompok" value="{{ $project->ketua_kelompok }}" required> -->
                     <label for="anggota{{ $project->id }}">Anggota Kelompok (pisahkan dengan koma)</label>
                     <select class="form-control" id="anggota{{ $project->id }}" name="anggota[]" multiple="multiple" style="width: 100%;">
                     </select>
@@ -269,6 +269,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal Error -->
 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

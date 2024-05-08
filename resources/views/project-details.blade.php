@@ -147,6 +147,16 @@
                             <div style="margin-bottom: 10px;">
                                 <h5 style="margin: 0;">Dibuat oleh :</h5>
                                 <h6 style="margin-top: 5px;">
+                                <li>
+                                    {{ $project->user->name}}
+                                    <ul>
+                                        <li><i class="fa-solid fa-phone"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   phone :  </strong></i><span><tel>{{ $project->user->phone_number}}</tel></span></li>
+                                        <li><i class="fa-solid fa-envelope"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   email :  </strong></i><span><mail>{{ $project->user->email}}<mail></span></li>
+                                        <!-- Jika setiap user memiliki satu tautan Github dan Linkedin -->
+                                        <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github :  </strong></i><a href="{{ $project->user->akun_github }}">{{ $project->user->akun_github }}</a></li>
+                                        <li><i class="fa-brands fa-linkedin"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Linkedin :  </strong></i><a href="{{ $project->user->akun_linkedin }}">{{ $project->user->akun_linkedin }}</a></li>
+                                    </ul>
+                                </li>
                                 @foreach($project->detail as $detail)
                                     <li>{{ $detail->users->name }}
                                         <ul>   

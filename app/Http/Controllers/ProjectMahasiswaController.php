@@ -31,34 +31,36 @@ class ProjectMahasiswaController extends Controller
         $request->validate([
             'nama_aplikasi' => 'required|string',
             'semester' => 'required|string',
-            'angkatan' => 'required|string',
+            // 'angkatan' => 'required|string',
             'golongan' => 'required|string',
             'kategori' => 'required|string',
             'link_github' => 'nullable|string',
             'link_website' => 'nullable|string',
             'link_youtube' => 'required|string',
             'narasi' => 'nullable|string',
-            'gambar_1' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'gambar_2' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'gambar_3' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'gambar_4' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'gambar_1' => 'image|mimes:jpeg,png,jpg|max:5048',
+            'gambar_2' => 'image|mimes:jpeg,png,jpg|max:5048',
+            'gambar_3' => 'image|mimes:jpeg,png,jpg|max:5048',
+            'gambar_4' => 'image|mimes:jpeg,png,jpg|max:5048',
             'anggota' => 'nullable|array', // Menambahkan validasi untuk anggota
         ]);
 
         // Lakukan operasi penyimpanan data jika validasi berhasil
         $userId = Auth::id();
         $userNim = Auth::user()->nim;
+        $userAngkatan = Auth::user()->angkatan;
         $project = new ProjectMahasiswa();
         $project->user_id = $userId;
         $project->nama_aplikasi = $request->nama_aplikasi;
         $project->semester = $request->semester;
         $project->kategori = $request->kategori;
-        $project->angkatan = $request->angkatan;
+        // $project->angkatan = $request->angkatan;
         $project->golongan = $request->golongan;
         
         // Cek kategori, jika "Tugas Akhir", abaikan nilai "ketua_kelompok"
         if ($request->kategori != 'Tugas Akhir') {
             $project->ketua_kelompok = $userNim;
+            $project->angkatan= $userAngkatan;
         }
 
         $project->link_github = $request->link_github;
