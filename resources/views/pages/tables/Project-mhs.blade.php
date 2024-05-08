@@ -89,8 +89,8 @@
                     <div id="step-2" style="display: none;">
                         <label for="nama_aplikasi">Nama Aplikasi</label>
                         <input type="text" class="form-control" id="nama_aplikasi" name="nama_aplikasi" placeholder="Nama Aplikasi" required>
-                        <label for="angkatan">Angkatan</label>
-                        <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Angkatan" required>
+                        <!-- <label for="angkatan">Angkatan</label>
+                        <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Angkatan" required> -->
                         <label for="golongan">Golongan</label>
                             <select class="form-control" id="golongan" name="golongan" required>
                                 <option value="">Pilih Golongan</option>
@@ -127,7 +127,7 @@
                     <div id="step-3" style="display: none;">
                         <label for="link_youtube">Link Youtube</label>
                         <input type="text" class="form-control" id="link_youtube" name="link_youtube" placeholder="Link Youtube" required>
-                        <label for="gambar_1">Banner</label>
+                        <label for="gambar_1">Poster</label>
                         <input type="file" class="form-control-file" id="gambar_1" name="gambar_1" required>
                         <label for="gambar_2">Gambar 1</label>
                         <input type="file" class="form-control-file" id="gambar_2" name="gambar_2" required>
@@ -163,8 +163,8 @@
                 <div class="modal-body" style="max-height: 500px; overflow-y: auto;">
                     <label for="nama_aplikasi{{ $project->id }}">Nama Aplikasi</label>
                     <input type="text" class="form-control" id="nama_aplikasi{{ $project->id }}" name="nama_aplikasi" value="{{ $project->nama_aplikasi }}" required>
-                    <label for="angkatan{{ $project->id }}">Angkatan</label>
-                    <input type="text" class="form-control" id="angkatan{{ $project->id }}" name="angkatan" value="{{ $project->angkatan }}" required>
+                    <!-- <label for="angkatan{{ $project->id }}">Angkatan</label>
+                    <input type="text" class="form-control" id="angkatan{{ $project->id }}" name="angkatan" value="{{ $project->angkatan }}" required> -->
                     <label for="golongan{{ $project->id }}">Golongan</label>
                         <select class="form-control" id="golongan{{ $project->id }}" name="golongan" required>
                             <option value="">Pilih Golongan</option>
@@ -193,7 +193,7 @@
 
                     <label for="edit_link_youtube{{ $project->id }}">Link Youtube</label>
                     <input type="text" class="form-control" id="edit_link_youtube{{ $project->id }}" name="link_youtube" value="{{ $project->link_youtube }}" required>
-                    <label for="edit_gambar_1{{ $project->id }}">Banner</label>
+                    <label for="edit_gambar_1{{ $project->id }}">Poster</label>
                     <input type="file" class="form-control-file" id="edit_gambar_1{{ $project->id }}" name="gambar_1">
                     <label for="edit_gambar_2{{ $project->id }}">Gambar 1</label>
                     <input type="file" class="form-control-file" id="edit_gambar_2{{ $project->id }}" name="gambar_2">

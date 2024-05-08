@@ -13,7 +13,7 @@ class ProjectDetailController extends Controller
     public function show($id)
     {
         // Mengambil detail proyek dengan ID yang diberikan
-        $project = ProjectMahasiswa::with('detail.user')->findOrFail($id);
+        $project = ProjectMahasiswa::with('detail.users')->findOrFail($id);
 
         // Mengirimkan data proyek ke tampilan
         return view('project-details', compact('project'));

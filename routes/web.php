@@ -15,8 +15,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UploadDataController;
+//use App\Http\Controllers\PortfolioController;
 use Illuminate\Http\Request;
 use App\Models\User;
+//use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -32,7 +34,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/landingpage', [IndexController::class, 'index'])->name('landingpage');
-
+//Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
 
 Route::get('/project-details/{id}', [ProjectDetailController::class, 'show'])->name('project.details');
 

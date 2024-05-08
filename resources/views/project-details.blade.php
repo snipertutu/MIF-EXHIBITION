@@ -68,7 +68,7 @@
 
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs d-flex align-items-center"
-            style="background-image: url('assets/img/breadcrumbs-bg.jpg');">
+        style="background-image: url({{ url('assets/img/TI1.jpg') }});">
             <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
                 <h2>Project Details</h2>
@@ -95,9 +95,9 @@
                     <iframe width="100%" height="400" src="https://youtube.com/embed/{{ $youtube[1] }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <a href="https://youtube.com/watch?v={{ $youtube[1] }}" width="100%" height="400 frameborder="0" ></a>
                 
-
-                        <div class="col-md-6 portfolio-item filter-remodeling">
-                            <div class="portfolio-content h-100">
+                    <div class="d-flex flex-row">
+                        <div class="col-lg-3 portfolio-item filter-remodeling">
+                            <div class="portfolio-content h-25">
                                 <img src="{{ asset('storage/' . $project->gambar_1) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
                                     <a href="{{ asset('storage/' . $project->gambar_1) }}" title="poster"
@@ -106,9 +106,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 portfolio-item filter-construction">
-                            <div class="portfolio-content h-100">
+                        <div class="col-lg-3 portfolio-item filter-construction">
+                            <div class="portfolio-content h-25">
                                 <img src="{{ asset('storage/' . $project->gambar_2) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
                                     <a href="{{ asset('storage/' . $project->gambar_2) }}" title="gambar 1"
@@ -117,8 +116,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 portfolio-item filter-remodeling">
-                            <div class="portfolio-content h-100">
+                        <div class="col-lg-3 portfolio-item filter-remodeling">
+                            <div class="portfolio-content h-25">
                                 <img src="{{ asset('storage/' . $project->gambar_3) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
                                     <a href="{{ asset('storage/' . $project->gambar_3) }}" title="gambar 2"
@@ -127,9 +126,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 portfolio-item filter-construction">
-                            <div class="portfolio-content h-100">
+                        <div class="col-lg-3 portfolio-item filter-construction">
+                            <div class="portfolio-content h-25">
                                 <img src="{{ asset('storage/' . $project->gambar_4) }}" class="img-fluid" alt="">
                                 <div class="portfolio-info">
                                     <a href="{{ asset('storage/' . $project->gambar_4) }}" title="gambar 3"
@@ -138,6 +136,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                        
+
+
                         <div style="font-family: Arial, sans-serif;">
                             <h5 style="margin-bottom: 5px;">
                                 <strong style="text-transform: capitalize;">{{ $project->nama_aplikasi }}</strong>
@@ -146,13 +148,13 @@
                                 <h5 style="margin: 0;">Dibuat oleh :</h5>
                                 <h6 style="margin-top: 5px;">
                                 @foreach($project->detail as $detail)
-                                    <li>{{ $detail->user->name }}
+                                    <li>{{ $detail->users->name }}
                                         <ul>   
-                                            <li><i class="fa-solid fa-phone"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   phone :  </strong></i><span><tel>{{ $detail->user->phone_number}}</tel></span></li>
-                                            <li><i class="fa-solid fa-envelope"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   email :  </strong></i><span><mail>{{ $detail->user->email}}<mail></span></li>
+                                            <li><i class="fa-solid fa-phone"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   phone :  </strong></i><span><tel>{{ $detail->users->phone_number}}</tel></span></li>
+                                            <li><i class="fa-solid fa-envelope"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   email :  </strong></i><span><mail>{{ $detail->users->email}}<mail></span></li>
                                             <!-- Jika setiap user memiliki satu tautan Github dan Linkedin -->
-                                            <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github :  </strong></i><a href="{{ $detail->user->akun_github }}">{{ $detail->user->akun_github }}</a></li>
-                                            <li><i class="fa-brands fa-linkedin"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Linkedin :  </strong></i><a href="{{ $detail->user->akun_linkedin }}">{{ $detail->user->akun_linkedin }}</a></li>
+                                            <li><i class="fa-brands fa-github"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Github :  </strong></i><a href="{{ $detail->users->akun_github }}">{{ $detail->users->akun_github }}</a></li>
+                                            <li><i class="fa-brands fa-linkedin"><strong style="font-family: Arial, sans-serif; font-weight: bold; color: #333;">   Linkedin :  </strong></i><a href="{{ $detail->users->akun_linkedin }}">{{ $detail->users->akun_linkedin }}</a></li>
                                         </ul>
                                     </li>
                                 @endforeach
