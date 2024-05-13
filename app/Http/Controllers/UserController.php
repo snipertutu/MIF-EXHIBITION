@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DataTables;
@@ -29,6 +30,23 @@ class UserController extends Controller
         return view('pages.tables.Mahasiswa');
     }
     
+    // public function search(){
+    //     $('#mahasiswa-table').DataTable({
+    //         processing: true,
+    //         serverSide: true,
+    //         "paging": false,
+    //         "searching": false,     
+    //         ajax: '{{ route("mahasiswa.index") }}',
+    //         columns: [
+    //             { data: 'name', name: 'name' },
+    //             { data: 'email', name: 'email' },
+    //             { data: 'nim', name: 'nim' },
+    //             { data: 'phone_number', name: 'phone_number' },
+    //             { data: 'angkatan', name: 'angkatan' },
+    //             { data: 'action', name: 'action', orderable: false, searchable: false }
+    //         ]
+    //     });
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -45,7 +63,7 @@ class UserController extends Controller
     {
         // Validasi data yang dikirim oleh pengguna
         $request->validate([
-            'nim' => 'required',
+            'nim' => 'required|unique:users',
             'name' => 'required',
             'angkatan' => 'required',
         ]);
@@ -66,6 +84,50 @@ class UserController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan. Silakan coba lagi.'], 500);
         }
     }
+
+
+    public function uploadExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx',
+        ]);
+    
+        $file = $request->file('file');
+        $path = $file->getRealPath();
+        $data = Excel::toArray(new UsersImport, $path);
+    
+        // Mulai transaksi database
+        DB::beginTransaction();
+    
+        try {
+            foreach ($data[0] as $row) {
+                // Cek apakah NIM sudah ada dalam database
+                if (User::where('nim', $row['nim'])->exists()) {
+                    // Jika ada, hapus data yang sudah ada
+                    User::where('nim', $row['nim'])->delete();
+                }
+                
+                // Simpan data mahasiswa ke database
+                User::create([
+                    'nim' => $row['nim'],
+                    'name' => $row['name'],
+                    'angkatan' => $row['angkatan'],
+                ]);
+            }
+    
+            // Commit transaksi jika tidak ada error
+            DB::commit();
+    
+            return response()->json(['success' => 'Data mahasiswa berhasil diupload.']);
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi error
+            DB::rollback();
+    
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Terjadi kesalahan. Silakan coba lagi.'], 500);
+        }
+    }
+    
 
     /**
      * Display the specified resource.

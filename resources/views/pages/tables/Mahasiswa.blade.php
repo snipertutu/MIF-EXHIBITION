@@ -1,10 +1,5 @@
 @extends('layout.master')
 
-@push('plugin-styles')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<!-- Tambahkan Bootstrap CSS jika belum dimuat -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-@endpush
 
 @section('content')
 <div class="row">
@@ -14,7 +9,7 @@
                 <h4 class="card-title">Table Mahasiswa</h4>
                 <!-- Gunakan atribut data-toggle dan data-target untuk memicu modal -->
                 <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalTambahMahasiswa">Tambah Data</button>
-                <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modaladdMahasiswa">Tambah Mahasiswa</button>
+                <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modaladdMahasiswa">Tambah Mahasiswa</button
                 <div class="table-responsive">
                     <table id="mahasiswa-table" class="table" style="width:100%">
                         <thead>
@@ -127,10 +122,7 @@
 @endsection
 
 @push('plugin-scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<!-- Tambahkan Bootstrap JavaScript jika belum dimuat -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
 @endpush
 
 @push('custom-scripts')
@@ -139,6 +131,8 @@ $(document).ready(function() {
     var table = $('#mahasiswa-table').DataTable({
         processing: true,
         serverSide: true,
+        "paging": true,
+        "searching": true,
         ajax: '{{ route("mahasiswa.index") }}',
         columns: [
             { data: 'name', name: 'name' },
@@ -150,8 +144,59 @@ $(document).ready(function() {
         ]
     });
 
-    $('#btnSubmit').click(function () {
-        $('#formUploadExcel').submit();
+    // Fungsi untuk memperbarui tabel dengan hasil pencarian
+    function searchMahasiswa(query) {
+        $.ajax({
+            url: '{{ route("mahasiswa.search") }}',
+            type: 'GET',
+            data: { query: query },
+            success: function(response) {
+                table.clear().rows.add(response.data).draw();
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Tangkap perubahan input teks dan lakukan pencarian
+    $('#searchmahasiswa').on('keyup', function() {
+        var query = $(this).val();
+        if (query.trim() !== '') {
+            searchMahasiswa(query);
+        } else {
+            // Jika input kosong, tampilkan semua data
+            table.ajax.reload();
+        }
+    });
+
+
+    // $('#btnSubmit').click(function () {
+    //     $('#formUploadExcel').submit();
+    // });
+
+    //ajaxnya excel
+    $('#btnSubmit').click(function() {
+        var formData = new FormData($('#formUploadExcel')[0]);
+
+        $.ajax({
+            url: '{{ route("upload.excel") }}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // Tampilkan pesan sukses
+                console.log(response.success);
+                // Tutup modal
+                $('#modalTambahMahasiswa').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                var err = JSON.parse(xhr.responseText);
+                // Tampilkan pesan error
+                console.log(err.error);
+            }
+        });
     });
 
     $('#formUpload').on('submit', function(e) {
