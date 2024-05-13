@@ -12,7 +12,7 @@ class ProjectAdminController extends Controller
 {
     public function index()
     {
-        $projects = ProjectMahasiswa::all();
+        $projects = ProjectMahasiswa::paginate(10);
         return view('pages.tables.project', compact('projects'));
     }
     

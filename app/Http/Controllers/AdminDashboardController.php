@@ -15,8 +15,9 @@ class AdminDashboardController extends Controller
 
     public function home()
     {
-        $projects = ProjectMahasiswa::all();
-        $mahasiswa = User::where('role', 'mahasiswa')->get();
+        // $projects = ProjectMahasiswa::all();
+        $projects = ProjectMahasiswa::paginate(10);
+        $mahasiswa = User::where('role', 'mahasiswa')->paginate(50);
         $totalProjects = ProjectMahasiswa::count();
         $totalProjectsThisYear = ProjectMahasiswa::whereYear('created_at', now()->year)->count();
         $totalUsers = User::count();

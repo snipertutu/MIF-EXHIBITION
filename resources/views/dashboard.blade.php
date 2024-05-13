@@ -109,6 +109,30 @@
                 </tbody>
             </table>
         </div>
+        <div class="pagination justify-content-center">
+                    <ul class="pagination">
+                        {{-- Tombol "Previous" --}}
+                        @if ($projects->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link" href="{{ $projects->previousPageUrl() }}">&laquo;</a></li>
+                        @endif
+
+                        {{-- Tombol halaman --}}
+                        @for ($i = 1; $i <= $projects->lastPage(); $i++)
+                            <li class="page-item {{ ($i === $projects->currentPage()) ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $projects->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+
+                        {{-- Tombol "Next" --}}
+                        @if ($projects->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $projects->nextPageUrl() }}">&raquo;</a></li>
+                        @else
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        @endif
+                    </ul>
+                </div>
       </div>
     </div>
   </div>
@@ -137,18 +161,59 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($mahasiswa as $mahasiswa)
-              <tr>
-                <td> {{$mahasiswa->name}}</td>
-                <td> {{$mahasiswa->email}}</td>
-                <td> {{$mahasiswa->nim}}</td>
-                <td> {{$mahasiswa->phone_number}}</td>
-                <td> {{$mahasiswa->angkatan}}</td>
-              </tr>
+              @foreach($mahasiswa as $mhs)
+                <tr>
+                    <td> {{ $mhs->name }}</td>
+                    <td> {{ $mhs->email }}</td>
+                    <td> {{ $mhs->nim }}</td>
+                    <td> {{ $mhs->phone_number }}</td>
+                    <td> {{ $mhs->angkatan }}</td>
+                </tr>
               @endforeach
             </tbody>
           </table>
         </div>
+        <div class="pagination justify-content-center">
+    <ul class="pagination">
+        {{-- Tombol "Previous" --}}
+        @if ($mahasiswa->onFirstPage())
+            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        @else
+            <li class="page-item"><a class="page-link" href="{{ $mahasiswa->previousPageUrl() }}">&laquo;</a></li>
+        @endif
+
+        {{-- Tombol halaman --}}
+        @php
+            $start = max($mahasiswa->currentPage() - 1, 1);
+            $end = min($mahasiswa->currentPage() + 1, $mahasiswa->lastPage());
+        @endphp
+        
+        @if ($start > 1)
+            {{-- Tampilkan tombol "..." untuk halaman sebelumnya --}}
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        @endif
+        
+        @for ($i = $start; $i <= $end; $i++)
+            <li class="page-item {{ ($i === $mahasiswa->currentPage()) ? 'active' : '' }}">
+                <a class="page-link" href="{{ $mahasiswa->url($i) }}">{{ $i }}</a>
+            </li>
+        @endfor
+        
+        @if ($end < $mahasiswa->lastPage())
+            {{-- Tampilkan tombol "..." untuk halaman selanjutnya --}}
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        @endif
+        
+
+        {{-- Tombol "Next" --}}
+        @if ($mahasiswa->hasMorePages())
+            <li class="page-item"><a class="page-link" href="{{ $mahasiswa->nextPageUrl() }}">&raquo;</a></li>
+        @else
+            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        @endif
+    </ul>
+</div>
+
       </div>
     </div>
   </div>

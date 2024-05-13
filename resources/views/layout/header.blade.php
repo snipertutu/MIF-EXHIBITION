@@ -2,7 +2,7 @@
   <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
     <a class="navbar-brand brand-logo" href="{{ url('/') }}">
       <!-- <img src="{{ url('assets/images/logo.svg') }}" alt="logo" /> </a> -->
-      <img src="{{ url('assets/img/MIF.jpg') }}" alt="logo" /> </a>
+      <img src="{{ url('assets/img/MIF_slidebar.png') }}" alt="logo" /> </a>
     <a class="navbar-brand brand-logo-mini" href="{{ url('/') }}">
       <img src="{{ url('assets/images/logo-mini.svg') }}" alt="logo" /> </a>
   </div>

@@ -10,7 +10,11 @@ class IndexController extends Controller
 {
     public function index(Request $request)
     {
+        // $projects = ProjectMahasiswa::paginate(3);
+        // return view('index', compact('projects'));
+
         $projects = ProjectMahasiswa::query();
+       
 
         // Tangkap nilai pencarian dari permintaan HTTP
         $tahun = $request->tahun;
@@ -27,7 +31,7 @@ class IndexController extends Controller
         }
 
         // Dapatkan hasil pencarian proyek
-        $projects = $projects->get();
+        $projects = ProjectMahasiswa::paginate(12);
 
         // Dapatkan data banner
         $banners = CarouselImage::all();

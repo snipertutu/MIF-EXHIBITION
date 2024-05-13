@@ -136,6 +136,30 @@
                 </div><!-- End Projects Item -->
                 @endforeach
             </div><!-- End Projects Container -->
+            <div class="pagination justify-content-center">
+              <ul class="pagination">
+                  {{-- Tombol "Previous" --}}
+                  @if ($projects->onFirstPage())
+                      <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                  @else
+                      <li class="page-item"><a class="page-link" href="{{ $projects->previousPageUrl() }}">&laquo;</a></li>
+                  @endif
+                  
+                  {{-- Tombol halaman --}}
+                  @for ($i = 1; $i <= $projects->lastPage(); $i++)
+                      <li class="page-item {{ ($i === $projects->currentPage()) ? 'active' : '' }}">
+                          <a class="page-link" href="{{ $projects->url($i) }}">{{ $i }}</a>
+                      </li>
+                  @endfor
+                  
+                  {{-- Tombol "Next" --}}
+                  @if ($projects->hasMorePages())
+                      <li class="page-item"><a class="page-link" href="{{ $projects->nextPageUrl() }}">&raquo;</a></li>
+                  @else
+                      <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                  @endif
+              </ul>
+            </div>
         </div>
     </div>
 </section><!-- End Our Projects Section -->

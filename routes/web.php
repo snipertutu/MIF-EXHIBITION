@@ -88,6 +88,9 @@ Route::post('tables/mahasiswa/store', [UserController::class, 'store'])->name('m
 Route::post('tables/mahasiswa/delete', [UserController::class, 'destroy'])->name('mahasiswa.destroy');
 Route::get('/mahasiswa/{id}/edit', [UserController::class, 'edit'])->name('mahasiswa.edit');
 Route::put('/mahasiswa/{id}/update', [UserController::class, 'update'])->name('mahasiswa.update');
+Route::post('/upload-excel', [UserController::class, 'uploadExcel'])->name('upload.excel');
+Route::get('/mahasiswa/search', [UserController::class, 'search'])->name('mahasiswa.search');
+
 
 
 

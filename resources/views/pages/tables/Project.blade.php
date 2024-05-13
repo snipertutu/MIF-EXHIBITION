@@ -1,10 +1,8 @@
 @extends('layout.master')
 
-@push('plugin-styles')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@endpush
-
 @section('content')
+@push('layout.header')
+@endpush
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
@@ -48,22 +46,62 @@
                                 <img src="{{ asset('storage/' . $project->gambar_4) }}" alt="{{ $project->nama_aplikasi }}" width="100">
                             </td>
                             <td>
-                            <button id="toggleButton-{{ $project->id }}" class="btn btn-sm btn-{{ $project->hidden ? 'success' : 'danger' }}" data-hidden="{{ $project->hidden }}" onclick="toggleVisibility(this, {{ $project->id }})">{{ $project->hidden ? 'Tampilkan' : 'Sembunyikan' }}</button>
+                                <button id="toggleButton-{{ $project->id }}" class="btn btn-sm btn-{{ $project->hidden ? 'success' : 'warning' }}" data-hidden="{{ $project->hidden }}" onclick="toggleVisibility(this, {{ $project->id }})">{{ $project->hidden ? 'Tampilkan' : 'Sembunyikan' }}</button>
                             </td>
-                            <td>
                             <td>
                                 <button type="button" class="btn btn-primary btn-sm edit-project-btn" data-toggle="modal" data-target="#editProjectModal{{ $project->id }}" data-project-id="{{ $project->id }}">
                                     Edit
                                 </button>
                             </td>
                             <td>
-                            <button class="badge btn-warning btn-sm" onclick="deleteProject({{ $project->id }})">Hapus</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteProject({{ $project->id }})">Hapus</button>
                             </td>
                           </tr>
                           @endforeach
                       </tbody>
                   </table>
                 </div>
+                <div class="pagination justify-content-center">
+                    <ul class="pagination">
+                        {{-- Tombol "Previous" --}}
+                        @if ($projects->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link" href="{{ $projects->previousPageUrl() }}">&laquo;</a></li>
+                        @endif
+
+                        {{-- Tombol halaman --}}
+                        @php
+                            $start = max($projects->currentPage() - 1, 1);
+                            $end = min($projects->currentPage() + 1, $projects->lastPage());
+                        @endphp
+
+                        @if ($start > 1)
+                            {{-- Tampilkan tombol "..." untuk halaman sebelumnya --}}
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        @endif
+
+                        @for ($i = $start; $i <= $end; $i++)
+                            <li class="page-item {{ ($i === $projects->currentPage()) ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $projects->url($i) }}">{{ $i }}</a>
+                            </li>
+                        @endfor
+
+                        @if ($end < $projects->lastPage())
+                            {{-- Tampilkan tombol "..." untuk halaman selanjutnya --}}
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        @endif
+
+
+                        {{-- Tombol "Next" --}}
+                        @if ($projects->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $projects->nextPageUrl() }}">&raquo;</a></li>
+                        @else
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        @endif
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
@@ -177,20 +215,14 @@
 
 
 @push('plugin-scripts')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Bootstrap CSS -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<!-- Bootstrap JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+
+<sripct src="{{asset('assets/plugins/chartjs/chart.min.js')}}"></script>
+<sripct src="{{asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js')}}"></script>
 @endpush
 
 @push('custom-scripts')
+
 <script>
     $(document).ready(function() {
         $('#anggota').select2({

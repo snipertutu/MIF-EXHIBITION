@@ -35,9 +35,9 @@
                                         <img src="{{ asset('storage/' . $banner->image_url) }}" alt="{{ $banner->title }}" width="100">
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-success btn-icons btn-rounded" data-toggle="modal" data-target="#addHomepageModal">
+                                        <!-- <button type="button" class="btn btn-success btn-icons btn-rounded" data-toggle="modal" data-target="#addHomepageModal">
                                                   <i class="mdi mdi-plus"></i>
-                                        </button>
+                                        </button> -->
                                         <button type="button" class="btn btn-icons btn-rounded btn-danger delete-button" data-id="{{ $banner->id }}" data-toggle="modal" data-target="#deleteBannerModal">
                                                   <i class="mdi mdi-archive"></i>
                                         </button>

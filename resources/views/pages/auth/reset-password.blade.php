@@ -36,6 +36,9 @@
                 <button type="submit" class="btn btn-primary submit-btn btn-block">Reset Password</button>
             </div>
         </form>
+        <div class="text-block text-center my-3">
+          <a href="{{ route('login') }}" class="text-black text-small">Login</a>
+        </div>
 
         @if ($errors->any())
                 <div class="alert alert-danger">
@@ -46,12 +49,8 @@
                     </ul>
                 </div>
                 @endif
+                
       </div>
-      <ul class="auth-footer">
-        <li>
-          <a href="{{ route('login') }}">Login</a>
-        </li>
-      </ul>
       <div class="footer-legal text-center position-relative">
             <div class="container">
                 <div class="copyright">

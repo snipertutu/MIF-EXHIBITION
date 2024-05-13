@@ -60,9 +60,9 @@ class ProjectMahasiswaController extends Controller
         // Cek kategori, jika "Tugas Akhir", abaikan nilai "ketua_kelompok"
         if ($request->kategori != 'Tugas Akhir') {
             $project->ketua_kelompok = $userNim;
-            $project->angkatan= $userAngkatan;
+            
         }
-
+        $project->angkatan= $userAngkatan;
         $project->link_github = $request->link_github;
         $project->link_website = $request->link_website;
         $project->link_youtube = $request->link_youtube;
